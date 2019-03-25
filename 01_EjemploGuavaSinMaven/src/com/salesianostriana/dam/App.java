@@ -1,3 +1,5 @@
+package com.salesianostriana.dam;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
