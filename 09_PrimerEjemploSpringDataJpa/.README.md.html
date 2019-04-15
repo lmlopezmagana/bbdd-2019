@@ -1,0 +1,732 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>/home/luismi/Documentos/repos/bbdd-2019/09_PrimerEjemploSpringDataJpa/.README.md.html</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<h1> <a id="ejemplo-9---primer-ejemplo-con-spring-data-jpa" class="anchor" href="#ejemplo-9---primer-ejemplo-con-spring-data-jpa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 9 - Primer ejemplo con Spring Data JPA</h1> 
+<p>Este es el primer ejemplo en el que integramos el acceso a base de datos con Spring Data JPA. Para crearlo, hemos utilizado el asistente que encontramos en <em>File &gt; New &gt; Spring Starter Project</em>. Hemos a&ntilde;adido las siguientes dependencias (las hemos a&ntilde;adido a trav&eacute;s de dicho asistente, y este es el resultado en el <code>pom.xml</code>:</p> 
+<div class="highlight highlight-text-xml">
+ <pre>	&lt;<span class="pl-ent">dependencies</span>&gt;
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-data-jpa&lt;/<span class="pl-ent">artifactId</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-thymeleaf&lt;/<span class="pl-ent">artifactId</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-web&lt;/<span class="pl-ent">artifactId</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;com.h2database&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;h2&lt;/<span class="pl-ent">artifactId</span>&gt;
+			&lt;<span class="pl-ent">scope</span>&gt;runtime&lt;/<span class="pl-ent">scope</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;org.projectlombok&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;lombok&lt;/<span class="pl-ent">artifactId</span>&gt;
+			&lt;<span class="pl-ent">optional</span>&gt;true&lt;/<span class="pl-ent">optional</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+		&lt;<span class="pl-ent">dependency</span>&gt;
+			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
+			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-test&lt;/<span class="pl-ent">artifactId</span>&gt;
+			&lt;<span class="pl-ent">scope</span>&gt;test&lt;/<span class="pl-ent">scope</span>&gt;
+		&lt;/<span class="pl-ent">dependency</span>&gt;
+	&lt;/<span class="pl-ent">dependencies</span>&gt;</pre>
+</div> 
+<p>A partir de esto, podemos observar que estamos creando un proyecto <em>web</em>, con motor de plantillas <em>Thymeleaf</em>, que va a realizar acceso a datos a trav&eacute;s de <em>data jpa</em>, que har&aacute; uso de <em>lombok</em>, y con una base de datos especial llamada <em>H2</em>, que tambi&eacute;n queda incluida dentro del proyecto.</p> 
+<h2> <a id="configuraci&oacute;n-a-trav&eacute;s-de-applicationproperties" class="anchor" href="#configuraci%C3%B3n-a-trav%C3%A9s-de-applicationproperties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuraci&oacute;n a trav&eacute;s de <em>application.properties</em> </h2> 
+<p>Aunque Spring Boot, al detectar las dependencias de Spring Data JPA y de H2, nos ofrece una configuraci&oacute;n de base de datos por defecto, vamos a usar una serie de propiedades para afinar la misma.</p> 
+<ul> 
+ <li> <code>spring.datasource.url</code>: es la URL jdbc de conexi&oacute;n a la base de datos. En la <a href="https://www.h2database.com/html/main.html" rel="nofollow">documentaci&oacute;n de H2</a> podemos encontrar m&aacute;s informaci&oacute;n.</li> 
+ <li> <code>spring.datasource.username</code> y <code>spring.datasource.password</code> son el usuario/contrase&ntilde;a con el que accedemos a la base de datos. Para H2, por defecto es <em>sa</em> (Sys Admin) y sin contrase&ntilde;a.</li> 
+ <li> <code>spring.jpa.hibernate.ddl-auto</code>: indicamos la estrategia de generaci&oacute;n del DDL (el esquema) de la base de datos. El valor <code>update</code> indica que solo modifica el DDL si encuentra cambios.</li> 
+ <li> <code>spring.jpa.show-sql</code>: indica si queremos que se muestren por consola las consultas SQL que se van ejecutando <em>por detr&aacute;s</em>.</li> 
+ <li> <code>spring.h2.console.enabled</code>: indicamos si queremos habilitar la consola de H2, un cliente web para acceder a la base de datos.</li> 
+</ul> 
+<h2> <a id="estructura-de-paquetes" class="anchor" href="#estructura-de-paquetes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Estructura de paquetes</h2> 
+<p>El ejemplo est&aacute; estructurado en 3 simples paquetes.</p> 
+<ul> 
+ <li> <code>com.salesianostriana.dam</code>: es el paquete raiz, que incluye la clase principal.</li> 
+ <li> <code>com.salesianostriana.dam.modelo</code>: paquete en el cual vamos a definir todas las entidades de nuestro proyecto.</li> 
+ <li> <code>com.salesianostriana.dam.repositorios</code>: paquete en el que definimos los repositorios de este proyecto.</li> 
+</ul> 
+<h2> <a id="entidades" class="anchor" href="#entidades" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entidades</h2> 
+<p>Las entidades son objetos de nuestra aplicaci&oacute;n que ser&aacute;n <strong>mapeados</strong> a la base de datos. Es decir, como normal general (aunque hay excepciones), por cada entidad encontraremos una tabla en nuestra base de datos relacional.</p> 
+<p>En el caso de este ejemplo:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+</pre>
+</div> 
+<p>Esta entidad ser&aacute; mapeada con una tabla en una base de datos relacional con la siguiente estructura:</p> 
+<ul> 
+ <li>ALUMNO(id, nombre, apellidos, email).</li> 
+</ul> 
+<h3> <a id="clave-primaria" class="anchor" href="#clave-primaria" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clave primaria</h3> 
+<p>La clave primaria de una entidad la denotaremos a trav&eacute;s de la anotaci&oacute;n <code>@Id</code> sobre el atributo.</p> 
+<h4> <a id="generaci&oacute;n-autom&aacute;tica-de-la-clave-primaria" class="anchor" href="#generaci%C3%B3n-autom%C3%A1tica-de-la-clave-primaria" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generaci&oacute;n autom&aacute;tica de la clave primaria</h4> 
+<p>En muchos contextos, nos resultar&aacute; muy c&oacute;modo gestionar las claves primarias de nuestras entidades a trav&eacute;s de un campo <em>autonum&eacute;rico</em>, es decir, a trav&eacute;s de un n&uacute;mero entero que comience en 1 y que se vaya incrementando autom&aacute;ticamente. Para ello completamos la anotaci&oacute;n <code>@Id</code> con <code>@GeneratedValue</code>. Por ahora, escogemos la estrategia de generaci&oacute;n autom&aacute;tica; Spring Data JPA escoge, para el motor de base de datos que estemos usando, la mejor estrategia de generaci&oacute;n (en el caso de H2, es una secuencia <em>general</em> que utiliza para todas las tablas).</p> 
+<h2> <a id="repositorios" class="anchor" href="#repositorios" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Repositorios</h2> 
+<p>Se tratan de nuestros objetos de acceso a datos (DAO, por sus siglas en ingl&eacute;s), con m&eacute;todos como <code>save</code>, <code>delete</code>, <code>update</code>, ...</p> 
+<p>En Spring Data JPA, para crear un DAO tan solo tenemos que crear una interfaz que extienda a <code>CrudRepository</code> o a algunas de sus subinterfaces, como <strong><code>JpaRepository</code></strong>.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">AlumnoRepository</span> <span class="pl-k">extends</span> <span class="pl-e">JpaRepository&lt;<span class="pl-smi">Alumno</span>, <span class="pl-smi">Long</span>&gt;</span> {
+
+}</pre>
+</div> 
+<p>Tenemos que indicar dos tipos de datos:</p> 
+<ul> 
+ <li>Primero, el tipo de dato <em>entidad</em> que va a gestionar el DAO</li> 
+ <li>Segundo, el tipo de dato del Id de dicha entidad.</li> 
+</ul> 
+<p>N&oacute;tese que si bien Spring define el estereotipo de bean <code>@Repository</code>, en este caso no es necesario usar dicha anotaci&oacute;n.</p>
+</body>
+</html>

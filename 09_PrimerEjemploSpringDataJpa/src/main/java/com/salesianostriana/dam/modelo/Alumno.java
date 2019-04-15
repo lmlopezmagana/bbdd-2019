@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * Clase que modela los datos más básicos de un alumno
+ * 
  * @author lmlopez
  *
  */
