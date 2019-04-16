@@ -640,7 +640,7 @@ function setDocumentScrollTop(ypos)
 </head>
 <body class="markdown-body">
 <h1> <a id="ejemplo-11---ejemplo-de-crud-completo-con-spring-data-jpa-spring-web-mvc-y-thymeleaf" class="anchor" href="#ejemplo-11---ejemplo-de-crud-completo-con-spring-data-jpa-spring-web-mvc-y-thymeleaf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 11 - Ejemplo de Crud Completo con Spring Data JPA, Spring Web MVC y Thymeleaf</h1> 
-<p>Como en el proyecto anterior, partimos del <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/09_PrimerEjemploSpringDataJpa">ejemplo 9</a>. En este caso, vamos a realizar todo lo necesario para crear un Crud completo desde Thymeleaf, Spring Web MVC y Spring Data JPA</p> 
+<p>Como en el proyecto anterior, partimos del <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/09_PrimerEjemploSpringDataJpa">ejemplo 9</a>, aunque eliminaremos algo de c&oacute;digo. En este caso, vamos a realizar todo lo necesario para crear un Crud completo desde Thymeleaf, Spring Web MVC y Spring Data JPA</p> 
 <h2> <a id="qu&eacute;-tenemos-ya-hecho" class="anchor" href="#qu%C3%A9-tenemos-ya-hecho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; tenemos ya hecho?</h2> 
 <ol> 
  <li>Ya tenemos todas las <strong>dependencias</strong> necesarias incluidas en el <code>pom.xml</code>.</li> 
@@ -682,6 +682,104 @@ function setDocumentScrollTop(ypos)
 </pre>
 </div> 
 <h2> <a id="paso-2-creaci&oacute;n-del-esqueleto-del-controlador-alumnocontroller" class="anchor" href="#paso-2-creaci%C3%B3n-del-esqueleto-del-controlador-alumnocontroller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2: Creaci&oacute;n del esqueleto del controlador, <strong><code>AlumnoController</code></strong> </h2> 
-<p>Creamos un nuevo paquete llamado <code>controladores</code>, y dentro la nueva clase <code>AlumnoController</code>.</p>
+<p>Creamos un nuevo paquete llamado <code>controladores</code>, y dentro la nueva clase <code>AlumnoController</code>. El esqueleto de la clase incluir&aacute; el m&eacute;todo de entrada, que mostrar&aacute; un listado de todos los alumnos:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Controller</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoController</span> {
+	
+	<span class="pl-k">private</span> <span class="pl-smi">AlumnoServicio</span> alumnoServicio;
+	
+	<span class="pl-k">public</span> <span class="pl-en">AlumnoController</span>(<span class="pl-smi">AlumnoServicio</span> <span class="pl-v">servicio</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>alumnoServicio <span class="pl-k">=</span> servicio;
+	}
+	
+	<span class="pl-k">@GetMapping</span>({<span class="pl-s"><span class="pl-pds">&quot;</span>/<span class="pl-pds">&quot;</span></span>, <span class="pl-s"><span class="pl-pds">&quot;</span>/list<span class="pl-pds">&quot;</span></span>})
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">listarTodos</span>(<span class="pl-smi">Model</span> <span class="pl-v">model</span>) {
+		model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>lista<span class="pl-pds">&quot;</span></span>, alumnoServicio<span class="pl-k">.</span>findAll());
+		<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>index<span class="pl-pds">&quot;</span></span>;
+	}
+
+}</pre>
+</div> 
+<p>Para finalizar este paso, creamos la plantilla, en la ruta <code>/src/main/resources/templates/</code>, llamada <code>index.html</code>. Lo describiremos por pasos:</p> 
+<ul> 
+ <li>Para indicar que es una plantilla de Thymeleaf, tenemos que a&ntilde;adir el espacio de nombres en la etiqueta <code>&lt;html&gt;</code>:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns:th</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>http://www.thymeleaf.org<span class="pl-pds">&quot;</span></span>&gt;</pre>
+</div> 
+<ul> 
+ <li>En este ejemplo, no nos centramos en el dise&ntilde;o, as&iacute; que no usaremos ni plantillas, ni siquiera CSS. El men&uacute; lo definimos como una sencilla capa con enlaces (las opciones editar y borrar aparecer&aacute;n m&aacute;s adelante).</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>menu<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/list}<span class="pl-pds">&quot;</span></span>&gt;Inicio&lt;/<span class="pl-ent">a</span>&gt; | &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/nuevo}<span class="pl-pds">&quot;</span></span>&gt;Nuevo alumno&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre>
+</div> 
+<ul> 
+ <li>El listado de alumnos lo <em>pintaremos</em> mediante una tabla. En la misma, utilizamos los elementos de thymeleaf <code>th:each</code> para indicar que haga un bucle sobre la colecci&oacute;n <code>${lista}</code>:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>	&lt;<span class="pl-ent">tbody</span>&gt;
+		&lt;<span class="pl-ent">tr</span> <span class="pl-e">th:each</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>alumno : ${lista}<span class="pl-pds">&quot;</span></span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.id}<span class="pl-pds">&quot;</span></span>&gt;1&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.nombre}<span class="pl-pds">&quot;</span></span>&gt;Nombre&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.apellidos}<span class="pl-pds">&quot;</span></span>&gt;Apellidos&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.email}<span class="pl-pds">&quot;</span></span>&gt;Email&lt;/<span class="pl-ent">td</span>&gt;
+		&lt;/<span class="pl-ent">tr</span>&gt;
+	&lt;/<span class="pl-ent">tbody</span>&gt;</pre>
+</div> 
+<p>El c&oacute;digo completo de la plantilla ser&iacute;a:</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span> <span class="pl-e">xmlns:th</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>http://www.thymeleaf.org<span class="pl-pds">&quot;</span></span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>UTF-8<span class="pl-pds">&quot;</span></span>&gt;
+&lt;<span class="pl-ent">title</span>&gt;Ejemplo de un CRUD completo&lt;/<span class="pl-ent">title</span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>menu<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/list}<span class="pl-pds">&quot;</span></span>&gt;Inicio&lt;/<span class="pl-ent">a</span>&gt; | &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/nuevo}<span class="pl-pds">&quot;</span></span>&gt;Nuevo alumno&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;
+&lt;<span class="pl-ent">br</span> /&gt;&lt;<span class="pl-ent">br</span> /&gt;
+&lt;<span class="pl-ent">table</span> <span class="pl-e">border</span>=<span class="pl-s">1</span>&gt;
+	&lt;<span class="pl-ent">thead</span>&gt;
+		&lt;<span class="pl-ent">tr</span>&gt;
+			&lt;<span class="pl-ent">th</span>&gt;Id&lt;/<span class="pl-ent">th</span>&gt;
+			&lt;<span class="pl-ent">th</span>&gt;Nombre&lt;/<span class="pl-ent">th</span>&gt;
+			&lt;<span class="pl-ent">th</span>&gt;Apellidos&lt;/<span class="pl-ent">th</span>&gt;
+			&lt;<span class="pl-ent">th</span>&gt;email&lt;/<span class="pl-ent">th</span>&gt;
+		&lt;/<span class="pl-ent">tr</span>&gt;
+	&lt;/<span class="pl-ent">thead</span>&gt;
+	&lt;<span class="pl-ent">tbody</span>&gt;
+		&lt;<span class="pl-ent">tr</span> <span class="pl-e">th:each</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>alumno : ${lista}<span class="pl-pds">&quot;</span></span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.id}<span class="pl-pds">&quot;</span></span>&gt;1&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.nombre}<span class="pl-pds">&quot;</span></span>&gt;Nombre&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.apellidos}<span class="pl-pds">&quot;</span></span>&gt;Apellidos&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.email}<span class="pl-pds">&quot;</span></span>&gt;Email&lt;/<span class="pl-ent">td</span>&gt;
+		&lt;/<span class="pl-ent">tr</span>&gt;
+	&lt;/<span class="pl-ent">tbody</span>&gt;
+&lt;/<span class="pl-ent">table</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre>
+</div> 
+<h2> <a id="paso-adicional-fichero-datasql" class="anchor" href="#paso-adicional-fichero-datasql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso adicional: fichero <code>data.sql</code> </h2> 
+<p>Para que nuestra base de datos tenga datos de ejemplo, podemos hacerlo de dos formas:</p> 
+<ul> 
+ <li>Crear un bean que utilice repositorios o servicios para insertarlos (program&aacute;ticamente).</li> 
+ <li> <em>Hacerlo a trav&eacute;s de sql</em>. Tomamos esa segunda opci&oacute;n.</li> 
+</ul> 
+<p>Para hacerlo, seguimos los siguientes pasos:</p> 
+<ol> 
+ <li>Necesitamos crear un fichero llamado <code>data.sql</code> en alg&uacute;n lugar del <em>classpath</em>. La carpeta <code>/src/main/resources/</code> es un buen lugar.</li> 
+ <li>Una verz creado, podemos usar la sintaxis de sql <code>INSERT INTO ... VALUES </code>.</li> 
+ <li>Para generar los valores de la columna que es clave primaria, utilizamos la secuencia de JPA ha generado.</li> 
+</ol> 
+<p>El contenido del fichero podr&iacute;a ser algo as&iacute;:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">insert into</span> alumno <span class="pl-k">values</span> (NEXTVAL(<span class="pl-s"><span class="pl-pds">'</span>hibernate_sequence<span class="pl-pds">'</span></span>),<span class="pl-s"><span class="pl-pds">'</span>Luis Miguel<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>L&oacute;pez<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>luismi.lopez@triana.com<span class="pl-pds">'</span></span>);
+<span class="pl-k">insert into</span> alumno <span class="pl-k">values</span> (NEXTVAL(<span class="pl-s"><span class="pl-pds">'</span>hibernate_sequence<span class="pl-pds">'</span></span>),<span class="pl-s"><span class="pl-pds">'</span>&Aacute;ngel<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>Naranjo<span class="pl-pds">'</span></span>,<span class="pl-s"><span class="pl-pds">'</span>angel.narajo@triana.com<span class="pl-pds">'</span></span>);</pre>
+</div> 
+<p><strong>En los pr&oacute;ximos ejemplos, a&ntilde;adiremos los formularios de creaci&oacute;n y edici&oacute;n, as&iacute; como la opci&oacute;n de visualizar solo un registro o de borrarlos</strong>.</p>
 </body>
 </html>

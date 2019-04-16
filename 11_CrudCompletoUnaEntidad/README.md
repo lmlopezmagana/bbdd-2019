@@ -1,7 +1,7 @@
 
 # Ejemplo 11 - Ejemplo de Crud Completo con Spring Data JPA, Spring Web MVC y Thymeleaf
 
-Como en el proyecto anterior, partimos del [ejemplo 9](https://github.com/lmlopezmagana/bbdd-2019/tree/master/09_PrimerEjemploSpringDataJpa). En este caso, vamos a realizar todo lo necesario para crear un Crud completo desde Thymeleaf, Spring Web MVC y Spring Data JPA
+Como en el proyecto anterior, partimos del [ejemplo 9](https://github.com/lmlopezmagana/bbdd-2019/tree/master/09_PrimerEjemploSpringDataJpa), aunque eliminaremos algo de código. En este caso, vamos a realizar todo lo necesario para crear un Crud completo desde Thymeleaf, Spring Web MVC y Spring Data JPA
 
 ## ¿Qué tenemos ya hecho?
 
@@ -50,4 +50,110 @@ public class AlumnoServicio {
 
 ## Paso 2: Creación del esqueleto del controlador, **`AlumnoController`**
 
-Creamos un nuevo paquete llamado `controladores`, y dentro la nueva clase `AlumnoController`.  
+Creamos un nuevo paquete llamado `controladores`, y dentro la nueva clase `AlumnoController`. El esqueleto de la clase incluirá el método de entrada, que mostrará un listado de todos los alumnos:
+
+```java
+@Controller
+public class AlumnoController {
+	
+	private AlumnoServicio alumnoServicio;
+	
+	public AlumnoController(AlumnoServicio servicio) {
+		this.alumnoServicio = servicio;
+	}
+	
+	@GetMapping({"/", "/list"})
+	public String listarTodos(Model model) {
+		model.addAttribute("lista", alumnoServicio.findAll());
+		return "index";
+	}
+
+}
+```
+
+Para finalizar este paso, creamos la plantilla, en la ruta `/src/main/resources/templates/`, llamada `index.html`. Lo describiremos por pasos:
+
+- Para indicar que es una plantilla de Thymeleaf, tenemos que añadir el espacio de nombres en la etiqueta `<html>`:
+
+```html
+<html xmlns:th="http://www.thymeleaf.org">
+```
+
+- En este ejemplo, no nos centramos en el diseño, así que no usaremos ni plantillas, ni siquiera CSS. El menú lo definimos como una sencilla capa con enlaces (las opciones editar y borrar aparecerán más adelante).
+
+```html
+<div id="menu">
+	<a th:href="@{/list}">Inicio</a> | <a href="@{/nuevo}">Nuevo alumno</a>
+</div>
+```
+
+- El listado de alumnos lo _pintaremos_ mediante una tabla. En la misma, utilizamos los elementos de thymeleaf `th:each` para indicar que haga un bucle sobre la colección `${lista}`:
+
+```html
+	<tbody>
+		<tr th:each="alumno : ${lista}">
+			<td th:text="${alumno.id}">1</td>
+			<td th:text="${alumno.nombre}">Nombre</td>
+			<td th:text="${alumno.apellidos}">Apellidos</td>
+			<td th:text="${alumno.email}">Email</td>
+		</tr>
+	</tbody>
+```
+
+El código completo de la plantilla sería:
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Ejemplo de un CRUD completo</title>
+</head>
+<body>
+<div id="menu">
+	<a th:href="@{/list}">Inicio</a> | <a href="@{/nuevo}">Nuevo alumno</a>
+</div>
+<br /><br />
+<table border=1>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Nombre</th>
+			<th>Apellidos</th>
+			<th>email</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="alumno : ${lista}">
+			<td th:text="${alumno.id}">1</td>
+			<td th:text="${alumno.nombre}">Nombre</td>
+			<td th:text="${alumno.apellidos}">Apellidos</td>
+			<td th:text="${alumno.email}">Email</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
+```
+
+## Paso adicional: fichero `data.sql`
+
+Para que nuestra base de datos tenga datos de ejemplo, podemos hacerlo de dos formas:
+
+- Crear un bean que utilice repositorios o servicios para insertarlos (programáticamente).
+- *Hacerlo a través de sql*. Tomamos esa segunda opción.
+
+Para hacerlo, seguimos los siguientes pasos:
+
+1. Necesitamos crear un fichero llamado `data.sql` en algún lugar del _classpath_. La carpeta `/src/main/resources/` es un buen lugar.
+2. Una verz creado, podemos usar la sintaxis de sql `INSERT INTO ... VALUES `.
+3. Para generar los valores de la columna que es clave primaria, utilizamos la secuencia de JPA ha generado.
+
+El contenido del fichero podría ser algo así:
+
+```sql
+insert into alumno values (NEXTVAL('hibernate_sequence'),'Luis Miguel','López','luismi.lopez@triana.com');
+insert into alumno values (NEXTVAL('hibernate_sequence'),'Ángel','Naranjo','angel.narajo@triana.com');
+``` 
+
+**En los próximos ejemplos, añadiremos los formularios de creación y edición, así como la opción de visualizar solo un registro o de borrarlos**.
