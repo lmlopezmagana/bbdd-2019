@@ -74,6 +74,7 @@ public class Alumno {
 	private String apellidos;
 	private String email;
 
+}
 ```
 
 Esta entidad será mapeada con una tabla en una base de datos relacional con la siguiente estructura:

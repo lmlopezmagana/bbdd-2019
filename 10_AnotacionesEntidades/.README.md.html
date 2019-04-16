@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>/home/luismi/Documentos/repos/bbdd-2019/09_PrimerEjemploSpringDataJpa/.README.md.html</title>
+<title>/home/luismi/Documentos/repos/bbdd-2019/10_AnotacionesEntidades/.README.md.html</title>
 
 
 <style type="text/css">
@@ -639,60 +639,10 @@ function setDocumentScrollTop(ypos)
 
 </head>
 <body class="markdown-body">
-<h1> <a id="ejemplo-9---primer-ejemplo-con-spring-data-jpa" class="anchor" href="#ejemplo-9---primer-ejemplo-con-spring-data-jpa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 9 - Primer ejemplo con Spring Data JPA</h1> 
-<p>Este es el primer ejemplo en el que integramos el acceso a base de datos con Spring Data JPA. Para crearlo, hemos utilizado el asistente que encontramos en <em>File &gt; New &gt; Spring Starter Project</em>. Hemos a&ntilde;adido las siguientes dependencias (las hemos a&ntilde;adido a trav&eacute;s de dicho asistente, y este es el resultado en el <code>pom.xml</code>:</p> 
-<div class="highlight highlight-text-xml">
- <pre>	&lt;<span class="pl-ent">dependencies</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-data-jpa&lt;/<span class="pl-ent">artifactId</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-thymeleaf&lt;/<span class="pl-ent">artifactId</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-web&lt;/<span class="pl-ent">artifactId</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;com.h2database&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;h2&lt;/<span class="pl-ent">artifactId</span>&gt;
-			&lt;<span class="pl-ent">scope</span>&gt;runtime&lt;/<span class="pl-ent">scope</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;org.projectlombok&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;lombok&lt;/<span class="pl-ent">artifactId</span>&gt;
-			&lt;<span class="pl-ent">optional</span>&gt;true&lt;/<span class="pl-ent">optional</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;org.springframework.boot&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;spring-boot-starter-test&lt;/<span class="pl-ent">artifactId</span>&gt;
-			&lt;<span class="pl-ent">scope</span>&gt;test&lt;/<span class="pl-ent">scope</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-	&lt;/<span class="pl-ent">dependencies</span>&gt;</pre>
-</div> 
-<p>A partir de esto, podemos observar que estamos creando un proyecto <em>web</em>, con motor de plantillas <em>Thymeleaf</em>, que va a realizar acceso a datos a trav&eacute;s de <em>data jpa</em>, que har&aacute; uso de <em>lombok</em>, y con una base de datos especial llamada <em>H2</em>, que tambi&eacute;n queda incluida dentro del proyecto.</p> 
-<h2> <a id="configuraci&oacute;n-a-trav&eacute;s-de-applicationproperties" class="anchor" href="#configuraci%C3%B3n-a-trav%C3%A9s-de-applicationproperties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuraci&oacute;n a trav&eacute;s de <em>application.properties</em> </h2> 
-<p>Aunque Spring Boot, al detectar las dependencias de Spring Data JPA y de H2, nos ofrece una configuraci&oacute;n de base de datos por defecto, vamos a usar una serie de propiedades para afinar la misma.</p> 
-<ul> 
- <li> <code>spring.datasource.url</code>: es la URL jdbc de conexi&oacute;n a la base de datos. En la <a href="https://www.h2database.com/html/main.html" rel="nofollow">documentaci&oacute;n de H2</a> podemos encontrar m&aacute;s informaci&oacute;n.</li> 
- <li> <code>spring.datasource.username</code> y <code>spring.datasource.password</code> son el usuario/contrase&ntilde;a con el que accedemos a la base de datos. Para H2, por defecto es <em>sa</em> (Sys Admin) y sin contrase&ntilde;a.</li> 
- <li> <code>spring.jpa.hibernate.ddl-auto</code>: indicamos la estrategia de generaci&oacute;n del DDL (el esquema) de la base de datos. El valor <code>update</code> indica que solo modifica el DDL si encuentra cambios.</li> 
- <li> <code>spring.jpa.show-sql</code>: indica si queremos que se muestren por consola las consultas SQL que se van ejecutando <em>por detr&aacute;s</em>.</li> 
- <li> <code>spring.h2.console.enabled</code>: indicamos si queremos habilitar la consola de H2, un cliente web para acceder a la base de datos.</li> 
-</ul> 
-<h2> <a id="estructura-de-paquetes" class="anchor" href="#estructura-de-paquetes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Estructura de paquetes</h2> 
-<p>El ejemplo est&aacute; estructurado en 3 simples paquetes.</p> 
-<ul> 
- <li> <code>com.salesianostriana.dam</code>: es el paquete raiz, que incluye la clase principal.</li> 
- <li> <code>com.salesianostriana.dam.modelo</code>: paquete en el cual vamos a definir todas las entidades de nuestro proyecto.</li> 
- <li> <code>com.salesianostriana.dam.repositorios</code>: paquete en el que definimos los repositorios de este proyecto.</li> 
-</ul> 
-<h2> <a id="entidades" class="anchor" href="#entidades" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entidades</h2> 
-<p>Las entidades son objetos de nuestra aplicaci&oacute;n que ser&aacute;n <strong>mapeados</strong> a la base de datos. Es decir, como normal general (aunque hay excepciones), por cada entidad encontraremos una tabla en nuestra base de datos relacional.</p> 
-<p>En el caso de este ejemplo:</p> 
+<h1> <a id="ejemplo-10---anotaciones-sobre-entidades" class="anchor" href="#ejemplo-10---anotaciones-sobre-entidades" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 10 - Anotaciones sobre entidades</h1> 
+<p>Partimos del <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/09_PrimerEjemploSpringDataJpa">ejemplo anterior</a>.</p> 
+<h2> <a id="anotaciones-m&iacute;nimas-para-una-entidad" class="anchor" href="#anotaciones-m%C3%ADnimas-para-una-entidad" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Anotaciones m&iacute;nimas para una entidad</h2> 
+<p>C&oacute;mo m&iacute;nimo, para que una clase sea considerada como una entidad, tenemos que utilizar la anotaci&oacute;n <code>@Entity</code> a nivel de clase, y declarar un atributo como <em>clave primaria</em> con <code>@Id</code>.</p> 
 <div class="highlight highlight-source-java">
  <pre><span class="pl-k">@Entity</span>
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
@@ -707,27 +657,85 @@ function setDocumentScrollTop(ypos)
 
 }</pre>
 </div> 
-<p>Esta entidad ser&aacute; mapeada con una tabla en una base de datos relacional con la siguiente estructura:</p> 
+<h2> <a id="anotaciones-a-nivel-de-clase" class="anchor" href="#anotaciones-a-nivel-de-clase" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Anotaciones a nivel de clase</h2> 
+<p>JPA nos ofrece la anotaci&oacute;n <a href="https://docs.oracle.com/javaee/7/api/javax/persistence/Table.html" rel="nofollow"><code>@Table</code></a>, con las siguientes propiedades:</p> 
 <ul> 
- <li>ALUMNO(id, nombre, apellidos, email).</li> 
+ <li> <code>name</code>: nombre de la tabla. Si no se especifica, se utiliza una estrategia de nombrado por defecto (que suele variar en funci&oacute;n del <a href="http://docs.jboss.org/hibernate/stable/annotations/api/org/hibernate/dialect/package-summary.html" rel="nofollow">dialecto</a>).</li> 
+ <li> <code>schema</code>, <code>catalog</code>: nombre del esquema o cat&aacute;logo de la base de datos donde estar&aacute; la tabla mapeada.</li> 
+ <li> <code>indexes</code>, <code>uniqueConstraints</code>: listado de &iacute;ndices o de restricciones de unicidad.</li> 
 </ul> 
-<h3> <a id="clave-primaria" class="anchor" href="#clave-primaria" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clave primaria</h3> 
-<p>La clave primaria de una entidad la denotaremos a trav&eacute;s de la anotaci&oacute;n <code>@Id</code> sobre el atributo.</p> 
-<h4> <a id="generaci&oacute;n-autom&aacute;tica-de-la-clave-primaria" class="anchor" href="#generaci%C3%B3n-autom%C3%A1tica-de-la-clave-primaria" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generaci&oacute;n autom&aacute;tica de la clave primaria</h4> 
-<p>En muchos contextos, nos resultar&aacute; muy c&oacute;modo gestionar las claves primarias de nuestras entidades a trav&eacute;s de un campo <em>autonum&eacute;rico</em>, es decir, a trav&eacute;s de un n&uacute;mero entero que comience en 1 y que se vaya incrementando autom&aacute;ticamente. Para ello completamos la anotaci&oacute;n <code>@Id</code> con <code>@GeneratedValue</code>. Por ahora, escogemos la estrategia de generaci&oacute;n autom&aacute;tica; Spring Data JPA escoge, para el motor de base de datos que estemos usando, la mejor estrategia de generaci&oacute;n (en el caso de H2, es una secuencia <em>general</em> que utiliza para todas las tablas).</p> 
-<h2> <a id="repositorios" class="anchor" href="#repositorios" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Repositorios</h2> 
-<p>Se tratan de nuestros objetos de acceso a datos (DAO, por sus siglas en ingl&eacute;s), con m&eacute;todos como <code>save</code>, <code>delete</code>, <code>update</code>, ...</p> 
-<p>En Spring Data JPA, para crear un DAO tan solo tenemos que crear una interfaz que extienda a <code>CrudRepository</code> o a algunas de sus subinterfaces, como <strong><code>JpaRepository</code></strong>.</p> 
 <div class="highlight highlight-source-java">
- <pre><span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">AlumnoRepository</span> <span class="pl-k">extends</span> <span class="pl-e">JpaRepository&lt;<span class="pl-smi">Alumno</span>, <span class="pl-smi">Long</span>&gt;</span> {
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">@Table</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>STUDENT<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
 
 }</pre>
 </div> 
-<p>Tenemos que indicar dos tipos de datos:</p> 
+<h2> <a id="anotaciones-a-nivel-de-atributo" class="anchor" href="#anotaciones-a-nivel-de-atributo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Anotaciones a nivel de atributo</h2> 
+<p>Como hemos comprobado, salvo el atributo anotado con <code>@Id</code>, hemos comprobado que no es obligatorio el uso de ning&uacute;n otra anotaci&oacute;n. Con todo, JPA nos ofrece otras dos para poder gestionar algunos aspectos:</p> 
 <ul> 
- <li>Primero, el tipo de dato <em>entidad</em> que va a gestionar el DAO</li> 
- <li>Segundo, el tipo de dato del Id de dicha entidad.</li> 
+ <li> <code>@Basic</code>: con dos posibles propiedades 
+  <ul> 
+   <li> <code>optional</code>: indica si el atributo debe ser obligatorio o no. Normalmente, implica una restricci&oacute;n <code>NOT NULL</code> a nivel del DDL.</li> 
+   <li> <code>fetchType</code>: si bien ya hablaremos m&aacute;s adelante, indica el <em>tipo de lectura</em> del atributo: si el atributo se obtendr&aacute; siempre (por defecto) o solo cuando se pida expl&iacute;citamente. Por ahora, puedes encontrar m&aacute;s informaci&oacute;n <a href="https://www.arquitecturajava.com/jpa-basic-optimizando-los-fechings/" rel="nofollow">aqu&iacute;</a>.</li> 
+  </ul> </li> 
+ <li> <code>@Column</code>: con varias propiedades, que suelen afectar al DDL: 
+  <ul> 
+   <li> <code>columnDefinition</code>: un <code>String</code> con el trozo de c&oacute;digo de DDL que se usar&aacute; para generar la columna en la tabla.</li> 
+   <li> <code>insertable</code>: Si la columna se incluye en las instrucciones SQL INSERT generadas por el proveedor de persistencia.</li> 
+   <li> <code>name</code>: nombre de la columna</li> 
+   <li> <code>length</code>: longitud de la columna</li> 
+   <li> <code>nullable</code>: si la columna permite valores nulos</li> 
+   <li> <code>preciosion</code>, <code>scale</code>: precisi&oacute;n y escala para valores num&eacute;ricos</li> 
+   <li> <code>table</code>: nombre de la tabla que contiene la columna</li> 
+   <li> <code>unique</code>: si la columna es una clave &uacute;nica</li> 
+   <li> <code>updatable</code>: Si la columna se incluye en las sentencias de SQL UPDATE generadas por el proveedor de persistencia.</li> 
+  </ul> </li> 
 </ul> 
-<p>N&oacute;tese que si bien Spring define el estereotipo de bean <code>@Repository</code>, en este caso no es necesario usar dicha anotaci&oacute;n.</p>
+<p>Un ejemplo de uso de las anotaciones anteriores podr&iacute;a ser:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">@Table</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>STUDENT<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">@Basic</span>(<span class="pl-c1">optional</span><span class="pl-k">=</span><span class="pl-c1">false</span>)
+	<span class="pl-k">@Column</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>FIRST_NAME<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">@Column</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>LAST_NAME<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">nullable</span><span class="pl-k">=</span><span class="pl-c1">false</span>)
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">@Column</span>(<span class="pl-c1">unique</span><span class="pl-k">=</span><span class="pl-c1">true</span>)
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+
+}</pre>
+</div> 
+<p>El DDL generado como resultado ser&iacute;a:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">create</span> <span class="pl-k">sequence</span> <span class="pl-en">hibernate_sequence</span>
+start with <span class="pl-c1">1</span> 
+increment by <span class="pl-c1">1</span>
+
+<span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">student</span> (
+	id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>, 
+	last_name <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">not null</span>, 
+	email <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), 
+	first_name <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">not null</span>, 
+	<span class="pl-k">primary key</span> (id)
+)
+
+<span class="pl-k">alter</span> <span class="pl-k">table</span> student 
+add <span class="pl-k">constraint</span> UK_fe0i52si7ybu0wjedj6motiim unique (email)</pre>
+</div>
 </body>
 </html>
