@@ -11,7 +11,7 @@
 	<groupId>com.salesianostriana.dam</groupId>
 	<artifactId>09_PrimerEjemploSpringDataJpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>08_Autowired-1</name>
+	<name>09_PrimerEjemploSpringDataJpa</name>
 	<description>Ejemplo de Spring Data Jpa</description>
 
 	<properties>

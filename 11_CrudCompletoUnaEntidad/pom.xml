@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>10_AnotacionesEntidades</artifactId>
+	<artifactId>11_CrudCompletoUnaEntidad</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>10_AnotacionesEntidades</name>
-	<description>Ejemplo de uso de anotaciones sobre entidades</description>
+	<name>11_CrudCompletoUnaEntidad</name>
+	<description>Ejemplo de un proyecto CRUD completo con una sola entidad</description>
 
 	<properties>
 		<java.version>1.8</java.version>
