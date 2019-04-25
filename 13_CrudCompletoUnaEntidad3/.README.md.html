@@ -1,0 +1,815 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>/home/luismi/Documentos/repos/bbdd-2019/13_CrudCompletoUnaEntidad3/.README.md.html</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<h1> <a id="ejemplo-13---ejemplo-de-crud-completo-con-spring-data-jpa-spring-web-mvc-y-thymeleaf-3" class="anchor" href="#ejemplo-13---ejemplo-de-crud-completo-con-spring-data-jpa-spring-web-mvc-y-thymeleaf-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 13 - Ejemplo de Crud Completo con Spring Data JPA, Spring Web MVC y Thymeleaf (3)</h1> 
+<p>Continuamos desde el <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/12_CrudCompletoUnaEntidad2">ejemplo anterior</a>.</p> 
+<h2> <a id="qu&eacute;-tenemos-ya-hecho" class="anchor" href="#qu%C3%A9-tenemos-ya-hecho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; tenemos ya hecho?</h2> 
+<p>Ya tenemos creada la entidad, as&iacute; como el repositorio, el servicio y el controlador con un m&eacute;todo que atiende el listado (tambi&eacute;n la plantilla que visualiza el mismo). Adem&aacute;s, tenemos el formulario que permite insertar nuevos alumnos</p> 
+<h2> <a id="qu&eacute;-vamos-a-crear" class="anchor" href="#qu%C3%A9-vamos-a-crear" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; vamos a crear?</h2> 
+<ol> 
+ <li>A&ntilde;adiremos los elementos necesarios para crear dos botones que nos permitan acceder el formulario de edici&oacute;n y borrar un alumno.</li> 
+ <li>Nos centramos ahora en modificar el formulario de manera que nos permita editar alumnos existentes.</li> 
+</ol> 
+<h2> <a id="algo-de-teor&iacute;a" class="anchor" href="#algo-de-teor%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algo de teor&iacute;a</h2> 
+<h3> <a id="controladores-que-reciben-par&aacute;metros" class="anchor" href="#controladores-que-reciben-par%C3%A1metros" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Controladores que reciben par&aacute;metros</h3> 
+<p>Hasta ahora hemos aprendido a crear m&eacute;todos en el controlador que <em>atend&iacute;an</em> a una ruta concreta, pero esta ruta siempre era <em>est&aacute;tica</em>. Por ejemplo:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Controller</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoController</span> {
+	
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+	
+	<span class="pl-k">@GetMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/nuevo<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">mostrarFormulario</span>(<span class="pl-smi">Model</span> <span class="pl-v">model</span>) {
+		model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>alumno<span class="pl-pds">&quot;</span></span>, <span class="pl-k">new</span> <span class="pl-smi">Alumno</span>());
+		<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>formulario<span class="pl-pds">&quot;</span></span>;
+	}
+	
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+}
+</pre>
+</div> 
+<p>Este m&eacute;todo siempre atender&aacute; a la ruta <code>/nuevo</code>.</p> 
+<p>Sin embargo, en alguna ocasi&oacute;n nos podr&iacute;a interesar poder pasar un par&aacute;metro (o varios) a trav&eacute;s de la ruta, de forma que podamos recoger ese par&aacute;metro en el controlador, y as&iacute; poder usarlo.</p> 
+<p>Por ejemplo, la ruta de un formulario de edici&oacute;n para el alumno con Id 7 podr&iacute;a ser <code>/editar/7</code>; y si el alumno que queremos editar es el que tiene como Id 1234, ser&iacute;a <code>/editar/1234</code>. De esta forma, podr&iacute;amos plantear una ruta <em>gen&eacute;rica</em>, <code>/editar/{id}</code>, y recoger el valor de <code>id</code> en el controlador. Para poder hacer esto, tenemos que utilizar la anotaci&oacute;n <code>@PathVariable</code>. Este nos va a permitir <em>inyectar</em> el valor de un segmento de la ruta en un par&aacute;metro del controlador. Veamos el c&oacute;digo de ejemplo:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@GetMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/editar/{id}<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-smi">String</span> mostrarFormularioEdicion(<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>id<span class="pl-pds">&quot;</span></span>) <span class="pl-k">long</span> id, <span class="pl-smi">Model</span> model)</pre>
+</div> 
+<p>Podemos apreciar algunos elementos:</p> 
+<ul> 
+ <li>En la ruta aparece un <code>{id}</code>. Las llaves sirven para indicar que es un par&aacute;metro, y no una ruta fija.</li> 
+ <li>La anotaci&oacute;n <code>@PathVariable</code> nos sirve para recoger ese valor.</li> 
+ <li>El nombre que est&aacute; contenido entre llaves es el que aparece entre comillas como par&aacute;metro de la anotaci&oacute;n <code>@PathVariable</code>.</li> 
+ <li>El valor de <code>{id}</code> se inyecta en la variable <code>long id</code>.</li> 
+</ul> 
+<h3> <a id="generaci&oacute;n-de-enlaces" class="anchor" href="#generaci%C3%B3n-de-enlaces" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generaci&oacute;n de enlaces</h3> 
+<p>Como sabemos, para crear enlaces con Thymeleaf, normalmente utilizamos expresiones del tipo <code>@{...}</code>. Thymeleaf nos ofrece la posibilidad de utilizar un valor variable que tenga en su contexto para generar un enlace. Para ello, utilizamos expresiones como <code>/editar/{id}(id=${valor})</code>. De esta forma, sucede lo siguiente:</p> 
+<ul> 
+ <li>Thymeleaf detecta que en la ruta del enlace hay un par&aacute;metro variable, llamado <code>id</code> (lo detecta porque va entre llaves).</li> 
+ <li>Al final de la ruta, y entre par&eacute;ntesis, realiza la asignaci&oacute;n de los valores de estos par&aacute;metros.</li> 
+ <li>El valor de un par&aacute;metro puede venir dado por otra expresi&oacute;n, en este caso, el contenido de la variable <code>${valor}</code>.</li> 
+</ul> 
+<p>El c&oacute;digo de ejemplo ser&iacute;a el siguiente:</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/editar/{id}(id=${alumno.id})}<span class="pl-pds">&quot;</span></span>&gt;Editar&lt;/<span class="pl-ent">a</span>&gt;</pre>
+</div> 
+<h2> <a id="paso-1-modificaciones-en-el-listado-para-a&ntilde;adir-botones-de-operaciones" class="anchor" href="#paso-1-modificaciones-en-el-listado-para-a%C3%B1adir-botones-de-operaciones" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1: Modificaciones en el listado para a&ntilde;adir <em>botones de operaciones</em> </h2> 
+<p>La forma m&aacute;s sencilla que tenemos de manejar la edici&oacute;n y borrado de un alumno es a&ntilde;adiendo dos enlaces o botones para cada alumno en el listado de todos ellos. Cada uno de estos botones tendr&aacute; un enlace especial, que nos permitir&aacute; realizar la operaci&oacute;n correspondiente.</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>	&lt;<span class="pl-ent">tbody</span>&gt;
+		&lt;<span class="pl-ent">tr</span> <span class="pl-e">th:each</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>alumno : ${lista}<span class="pl-pds">&quot;</span></span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.id}<span class="pl-pds">&quot;</span></span>&gt;1&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.nombre}<span class="pl-pds">&quot;</span></span>&gt;Nombre&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.apellidos}<span class="pl-pds">&quot;</span></span>&gt;Apellidos&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.email}<span class="pl-pds">&quot;</span></span>&gt;Email&lt;/<span class="pl-ent">td</span>&gt;
+			&lt;<span class="pl-ent">td</span>&gt;
+				&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/editar/{id}(id=${alumno.id})}<span class="pl-pds">&quot;</span></span>&gt;Editar&lt;/<span class="pl-ent">a</span>&gt; | 
+				&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/borrar/{id}(id=${alumno.id})}<span class="pl-pds">&quot;</span></span>&gt;Borrar&lt;/<span class="pl-ent">a</span>&gt;
+			&lt;/<span class="pl-ent">td</span>&gt;
+		&lt;/<span class="pl-ent">tr</span>&gt;
+	&lt;/<span class="pl-ent">tbody</span>&gt;</pre>
+</div> 
+<h2> <a id="paso-2-cambios-en-alumnocontroller-para-poder-manejar-la-operaci&oacute;n-de-edici&oacute;n" class="anchor" href="#paso-2-cambios-en-alumnocontroller-para-poder-manejar-la-operaci%C3%B3n-de-edici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2: Cambios en <code>AlumnoController</code> para poder manejar la operaci&oacute;n de edici&oacute;n</h2> 
+<p>El proceso de edici&oacute;n de una entidad (en nuestro caso, un <code>Alumno</code>) se realiza a trav&eacute;s de un formulario. Por tanto, necesitamos tenemos</p> 
+<ol> 
+ <li>Un m&eacute;todo en <code>AlumnoController</code> que permita mostrar el formulario</li> 
+ <li>Otro m&eacute;todo (anotado con <code>@PostMapping</code>) en el mismo controlador, que nos permita procesar la informaci&oacute;n.</li> 
+</ol> 
+<p>De hecho, el formulario de <strong>insertar</strong> y el formulario de <strong>editar</strong> ser&aacute;n casi id&eacute;nticos. La &uacute;nica salvedad es que el formulario de inserci&oacute;n recibe un alumno <em>vac&iacute;o</em>, y el de edici&oacute;n recibir&aacute; un alumno con datos. Por tanto tenemos dos opciones:</p> 
+<ul> 
+ <li>Crear un nuevo formulario (casi id&eacute;ntico) y solamente para editar</li> 
+ <li> <strong>Reutilizar el mismo formulario, con alguna peque&ntilde;a modificaci&oacute;n</strong>. Tomamos esta segunda opci&oacute;n</li> 
+</ul> 
+<h3> <a id="paso-21-m&eacute;todo-del-controlador-para-mostrar-el-formulario" class="anchor" href="#paso-21-m%C3%A9todo-del-controlador-para-mostrar-el-formulario" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2.1 M&eacute;todo del controlador para mostrar el formulario</h3> 
+<p>A diferencia que el formulario para crear un nuevo registro, este formulario debe buscar antes al alumno si existe; y de existir, <em>pasarlo</em> a trav&eacute;s del modelo al formulario. Utilizamos el Id del alumno a modificar para localizarlo y pasarlo al modelo. Si no lo encontramos (o no existe), redirigimos al listado.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Controller</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoController</span> {
+
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo	</span>
+
+	<span class="pl-k">@GetMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/editar/{id}<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">mostrarFormularioEdicion</span>(<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>id<span class="pl-pds">&quot;</span></span>) <span class="pl-k">long</span> <span class="pl-v">id</span>, <span class="pl-smi">Model</span> <span class="pl-v">model</span>) {
+		
+		<span class="pl-smi">Alumno</span> aEditar <span class="pl-k">=</span> alumnoServicio<span class="pl-k">.</span>findById(id);
+		
+		<span class="pl-k">if</span> (aEditar <span class="pl-k">!=</span> <span class="pl-c1">null</span>) {
+			model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>alumno<span class="pl-pds">&quot;</span></span>, aEditar);
+			<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>formulario<span class="pl-pds">&quot;</span></span>;
+		} <span class="pl-k">else</span> {
+			<span class="pl-c"><span class="pl-c">//</span> No existe ning&uacute;n alumno con el Id proporcionado.</span>
+			<span class="pl-c"><span class="pl-c">//</span> Redirigimos hacia el listado.</span>
+			<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>redirect:/<span class="pl-pds">&quot;</span></span>;
+		}
+	}
+	
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo	</span>
+	
+}</pre>
+</div> 
+<h3> <a id="paso-22-modificar-el-formulario-para-que-sepa-cu&aacute;ndo-queremos-editar" class="anchor" href="#paso-22-modificar-el-formulario-para-que-sepa-cu%C3%A1ndo-queremos-editar" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2.2 Modificar el formulario para que sepa cu&aacute;ndo queremos editar</h3> 
+<p>En el formulario necesitamos modificar, al menos, el atributo <code>th:action</code>, para que cuando queramos crear un nuevo <code>Alumno</code>, nos env&iacute;e a <code>/nuevo/submit</code>; y en caso de querer editar, nos env&iacute;e a <code>/editar/submit</code>. Lo podemos implementar utilizando el operador <code>?:</code>.</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>		&lt;<span class="pl-ent">form</span> <span class="pl-e">th:action</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.id != 0} ? @{/editar/submit} : @{/nuevo/submit}<span class="pl-pds">&quot;</span></span> 
+			  <span class="pl-e">th:object</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno}<span class="pl-pds">&quot;</span></span> 
+			  <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>post<span class="pl-pds">&quot;</span></span>&gt;</pre>
+</div> 
+<p>Adem&aacute;s, caemos en la cuenta de que cuando creamos un nuevo <code>Alumno</code>, es la base de datos quien genera el Id al almacenarlo; pero al editar, ya tenemos ese valor, y tiene que ser inmutable (es decir, no puede cambiar). Para poder <em>recibirlo</em>, y que despu&eacute;s se asocie al <em>Command Object</em> para enviarlo, necesitamos a&ntilde;adir un campo al formulario. <strong>Normalmente, los Id que se autogeneran no se suelen visualizar en el formulario</strong>. Para poder recibirlo sin visualizarlo a&ntilde;adimos un campo oculto (<em>hidden</em>), que tambi&eacute;n ser&aacute; condicional.</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">input</span> <span class="pl-e">th:if</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno.id != 0}<span class="pl-pds">&quot;</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>hidden<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>id<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:field</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>*{id}<span class="pl-pds">&quot;</span></span> /&gt;</pre>
+</div> 
+<p>De esta forma, el campo solo aparecer&aacute; cuando el <code>Alumno</code> recibido a trav&eacute;s del modelo no tenga un Id asignado.</p> 
+<h3> <a id="paso-23-procesamiento-de-los-datos-para-finalizar-la-edici&oacute;n" class="anchor" href="#paso-23-procesamiento-de-los-datos-para-finalizar-la-edici%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2.3 Procesamiento de los datos para finalizar la edici&oacute;n</h3> 
+<p>El contenido de este m&eacute;todo del controlador es casi id&eacute;ntico al de inserci&oacute;n.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Controller</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoController</span> {
+
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+	
+	<span class="pl-k">@PostMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/editar/submit<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">procesarFormularioEdicion</span>(<span class="pl-k">@ModelAttribute</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>alumno<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">Alumno</span> <span class="pl-v">a</span>) {
+		alumnoServicio<span class="pl-k">.</span>edit(a);
+		<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>redirect:/<span class="pl-pds">&quot;</span></span>;
+	}
+
+}
+</pre>
+</div> 
+<h2> <a id="paso-3-implementaci&oacute;n-del-borrado" class="anchor" href="#paso-3-implementaci%C3%B3n-del-borrado" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 3: Implementaci&oacute;n del borrado</h2> 
+<p>Una primera implementaci&oacute;n del borrado es sencilla de implementar. Utilizamos la misma idea de generar una ruta con el Id del <code>Alumno</code> a borrar, y un m&eacute;todo del controlador que implemente dicho borrado.</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/borrar/{id}(id=${alumno.id})}<span class="pl-pds">&quot;</span></span>&gt;Borrar&lt;/<span class="pl-ent">a</span>&gt;</pre>
+</div> 
+<p>Para facilitar el borrado, modificamos el servicio, aprovechando un m&eacute;todo del repositorio, que es capaz de borrar un <code>Alumno</code> por su Id.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Service</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoServicio</span> {
+
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo	</span>
+
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">delete</span>(<span class="pl-smi">Alumno</span> <span class="pl-v">a</span>) { alumnoRepository<span class="pl-k">.</span>delete(a); }
+	
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">delete</span>(<span class="pl-k">long</span> <span class="pl-v">id</span>) { alumnoRepository<span class="pl-k">.</span>deleteById(id); }
+	
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo	</span>
+
+}</pre>
+</div> 
+<p>De esa forma, el controlador ser&iacute;a as&iacute;:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Controller</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">AlumnoController</span> {
+
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+	
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">borrar</span>(<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>id<span class="pl-pds">&quot;</span></span>) <span class="pl-k">long</span> <span class="pl-v">id</span>) {
+		alumnoServicio<span class="pl-k">.</span>delete(id);
+		<span class="pl-k">return</span> <span class="pl-s"><span class="pl-pds">&quot;</span>redirect:/<span class="pl-pds">&quot;</span></span>;
+	}
+
+}
+</pre>
+</div> 
+<p><strong>En un futuro, ser&iacute;a bueno a&ntilde;adir alg&uacute;n tipo de confirmaci&oacute;n para el borrado, para evitar accidentes inesperados.</strong></p>
+</body>
+</html>
