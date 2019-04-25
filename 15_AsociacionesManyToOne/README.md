@@ -180,3 +180,11 @@ Podemos apreciar como:
 
 - Se añade un nuevo atributo, llamado `curso_id`, cuyo tipo es el mismo que el del Id de `Curso`.
 - Se añade también una restricción de clave externa para este atributo.
+
+## ¿Qué faltaría?
+
+Nos faltaría implementar la parte de interfaz de usuario correspondiente:
+
+- Un listado de todas los cursos, con sus correspondientes botoneras de opciones (editar y borrar).
+- Un formulario de creación y edición de cursos.
+- Modificar el formulario de creación/edición de Alumnos, para incluir el _atributo relacional curso_.
