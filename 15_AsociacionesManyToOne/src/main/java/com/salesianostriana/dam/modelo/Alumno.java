@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class Alumno {
 	private String apellidos;
 	private String email;
 	
+	@ManyToOne
+	private Curso curso;
+	
 	
 	/**
 	 * @param nombre
@@ -40,6 +44,22 @@ public class Alumno {
 		this.apellidos = apellidos;
 		this.email = email;
 	}
+
+
+	/**
+	 * @param nombre
+	 * @param apellidos
+	 * @param email
+	 * @param curso
+	 */
+	public Alumno(String nombre, String apellidos, String email, Curso curso) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.email = email;
+		this.curso = curso;
+	}
+	
+	
 	
 	
 

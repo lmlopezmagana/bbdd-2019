@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>/home/luismi/Documentos/repos/bbdd-2019/14_AsociacionesManyToOne/.README.md.html</title>
+<title>/home/luismi/Documentos/repos/bbdd-2019/15_AsociacionesManyToOne/.README.md.html</title>
 
 
 <style type="text/css">
@@ -639,8 +639,8 @@ function setDocumentScrollTop(ypos)
 
 </head>
 <body class="markdown-body">
-<h1> <a id="ejemplo-14---ejemplo-de-dos-entidades-con-una-asociaci&oacute;n-manytoone" class="anchor" href="#ejemplo-14---ejemplo-de-dos-entidades-con-una-asociaci%C3%B3n-manytoone" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 14 - Ejemplo de dos entidades con una asociaci&oacute;n ManyToOne</h1> 
-<p>Continuamos desde el [ejemplo asdfg]</p> 
+<h1> <a id="ejemplo-15---ejemplo-de-dos-entidades-con-una-asociaci&oacute;n-manytoone" class="anchor" href="#ejemplo-15---ejemplo-de-dos-entidades-con-una-asociaci%C3%B3n-manytoone" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 15 - Ejemplo de dos entidades con una asociaci&oacute;n ManyToOne</h1> 
+<p>Continuamos desde el <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/13_CrudCompletoUnaEntidad3">ejemplo 13</a></p> 
 <h2> <a id="qu&eacute;-tenemos-ya-hecho" class="anchor" href="#qu%C3%A9-tenemos-ya-hecho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; tenemos ya hecho?</h2> 
 <p>Ya tenemos creada una entidad, as&iacute; como su repositorio, un servicio y un controlador con algunos m&eacute;todos.</p> 
 <h2> <a id="qu&eacute;-vamos-a-crear" class="anchor" href="#qu%C3%A9-vamos-a-crear" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; vamos a crear?</h2> 
@@ -663,6 +663,138 @@ function setDocumentScrollTop(ypos)
 <ul> 
  <li>La entidad del lado <em>muchos</em> tendr&aacute; su repositorio y su servicio.</li> 
  <li>La entidad el lado <em>uno</em> tambi&eacute;n tendr&aacute; su repositorio y su servicio.</li> 
+</ul> 
+<h2> <a id="paso-1-creamos-la-segunda-entidad" class="anchor" href="#paso-1-creamos-la-segunda-entidad" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1: Creamos la segunda entidad</h2> 
+<p>Es muy parecida a la que ya tenemos creada</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Curso</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> tutor;
+	
+	<span class="pl-k">public</span> <span class="pl-en">Curso</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">tutor</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>nombre <span class="pl-k">=</span> nombre;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>tutor <span class="pl-k">=</span> tutor;
+	}	
+}
+</pre>
+</div> 
+<h2> <a id="paso-2-creamos-el-repositorio-y-servicio-para-esta-entidad" class="anchor" href="#paso-2-creamos-el-repositorio-y-servicio-para-esta-entidad" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2: Creamos el repositorio y servicio para esta entidad</h2> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">public</span> <span class="pl-k">interface</span> <span class="pl-en">CursoRepository</span> 
+		<span class="pl-k">extends</span> <span class="pl-e">JpaRepository&lt;<span class="pl-smi">Curso</span>, <span class="pl-smi">Long</span>&gt;</span> {
+
+}</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Service</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">CursoServicio</span> {
+
+	<span class="pl-c"><span class="pl-c">//</span> Inyectamos la dependencia al nuevo estilo, sin @Autowired</span>
+	<span class="pl-k">private</span> <span class="pl-smi">CursoRepository</span> cursoRepository;
+	
+	<span class="pl-k">public</span> <span class="pl-en">CursoServicio</span>(<span class="pl-smi">CursoRepository</span> <span class="pl-v">repo</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>cursoRepository <span class="pl-k">=</span> repo;
+	}
+	
+	<span class="pl-k">public</span> <span class="pl-smi">Curso</span> <span class="pl-en">add</span>(<span class="pl-smi">Curso</span> <span class="pl-v">c</span>) { <span class="pl-k">return</span> cursoRepository<span class="pl-k">.</span>save(c); }
+	
+	<span class="pl-k">public</span> <span class="pl-smi">Curso</span> <span class="pl-en">edit</span>(<span class="pl-smi">Curso</span> <span class="pl-v">c</span>) { <span class="pl-k">return</span> cursoRepository<span class="pl-k">.</span>save(c); }
+
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">delete</span>(<span class="pl-smi">Curso</span> <span class="pl-v">c</span>) { cursoRepository<span class="pl-k">.</span>delete(c); }
+	
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">delete</span>(<span class="pl-k">long</span> <span class="pl-v">id</span>) { cursoRepository<span class="pl-k">.</span>deleteById(id); }
+	
+	<span class="pl-k">public</span> <span class="pl-k">List&lt;<span class="pl-smi">Curso</span>&gt;</span> <span class="pl-en">findAll</span>() { <span class="pl-k">return</span> cursoRepository<span class="pl-k">.</span>findAll(); }
+	
+	
+	<span class="pl-k">public</span> <span class="pl-smi">Curso</span> <span class="pl-en">findById</span>(<span class="pl-k">long</span> <span class="pl-v">id</span>) {
+		<span class="pl-k">return</span> cursoRepository<span class="pl-k">.</span>findById(id)<span class="pl-k">.</span>orElse(<span class="pl-c1">null</span>);
+	}
+		
+}
+</pre>
+</div> 
+<h2> <a id="paso-3-modificaci&oacute;n-de-la-clase-alumno-para-registrar-la-asociaci&oacute;n-entre-clases" class="anchor" href="#paso-3-modificaci%C3%B3n-de-la-clase-alumno-para-registrar-la-asociaci%C3%B3n-entre-clases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 3: Modificaci&oacute;n de la clase <code>Alumno</code> para registrar la asociaci&oacute;n entre clases</h2> 
+<p>Para a&ntilde;adir los elementos necesarios para poder registrar la asociaci&oacute;n entre ambas clases tenemos que modificar nuestra clase <code>Alumno</code>. Necesitamos saber, para cada instancia de <code>Alumno</code>, cual es su instancia de <code>Curso</code> correspondiente. Por tanto, tenemos que a&ntilde;adir una propiedad a la primera clase, de este segundo tipo.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">Curso</span> curso;
+}</pre>
+</div> 
+<p><strong>Sin embargo, esto por s&iacute; solo no es suficiente</strong>. JPA (en nuestro caso, Spring Data JPA) nos pide que identifiquemos esta asociaci&oacute;n, para que la traslade al DDL (si corresponde) y la pueda manejar. Todo ello lo conseguimos a trav&eacute;s de la anotaci&oacute;n <code>@ManyToOne</code>.</p> 
+<p>El c&oacute;digo, finalmente, quedar&iacute;a as&iacute;:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+	
+	<span class="pl-k">@ManyToOne</span>
+	<span class="pl-k">private</span> <span class="pl-smi">Curso</span> curso;
+	
+	<span class="pl-k">public</span> <span class="pl-en">Alumno</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">apellidos</span>, <span class="pl-smi">String</span> <span class="pl-v">email</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>nombre <span class="pl-k">=</span> nombre;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>apellidos <span class="pl-k">=</span> apellidos;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>email <span class="pl-k">=</span> email;
+	}
+
+	<span class="pl-k">public</span> <span class="pl-en">Alumno</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">apellidos</span>, <span class="pl-smi">String</span> <span class="pl-v">email</span>, <span class="pl-smi">Curso</span> <span class="pl-v">curso</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>nombre <span class="pl-k">=</span> nombre;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>apellidos <span class="pl-k">=</span> apellidos;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>email <span class="pl-k">=</span> email;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>curso <span class="pl-k">=</span> curso;
+	}
+
+}
+</pre>
+</div> 
+<p>Si ejecutamos el proyecto, podemos apreciar el DDL generado</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">alumno</span> (
+	id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>, 
+	apellidos <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), 
+	email <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), 
+	nombre <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), 
+	curso_id <span class="pl-k">bigint</span>, 
+	<span class="pl-k">primary key</span> (id)
+);
+
+<span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">curso</span> (
+	id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>, 
+	nombre <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), 
+	tutor <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>), <span class="pl-k">primary key</span> (id)
+);
+
+<span class="pl-k">alter</span> <span class="pl-k">table</span> alumno 
+add <span class="pl-k">constraint</span> FKojks48ahsqwkx9o2s7pl0212p 
+<span class="pl-k">foreign key</span> (curso_id) <span class="pl-k">references</span> curso;</pre>
+</div> 
+<p>Podemos apreciar como:</p> 
+<ul> 
+ <li>Se a&ntilde;ade un nuevo atributo, llamado <code>curso_id</code>, cuyo tipo es el mismo que el del Id de <code>Curso</code>.</li> 
+ <li>Se a&ntilde;ade tambi&eacute;n una restricci&oacute;n de clave externa para este atributo.</li> 
 </ul>
 </body>
 </html>

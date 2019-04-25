@@ -50,6 +50,12 @@ public class AlumnoServicio {
 	public void delete(Alumno a) { alumnoRepository.delete(a); }
 	
 	/**
+	 * Elimina a un alumno por su Id
+	 * @param id
+	 */
+	public void delete(long id) { alumnoRepository.deleteById(id); }
+	
+	/**
 	 * Devuelve todos los alumnos
 	 * @return
 	 */

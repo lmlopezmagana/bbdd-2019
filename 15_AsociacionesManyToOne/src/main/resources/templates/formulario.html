@@ -25,7 +25,8 @@ input[type="text"], input[type="email"]  {
 			alumno</a>
 	</div>
 	<div id="formulario">
-		<form th:action="@{/nuevo/submit}" th:object="${alumno}" method="post">
+		<form th:action="${alumno.id != 0} ? @{/editar/submit} : @{/nuevo/submit}" th:object="${alumno}" method="post">
+			<input th:if="${alumno.id != 0}" type="hidden" name="id" th:field="*{id}" />
 			<input type="text" name="nombre" th:field="*{nombre}"
 				placeholder="Nombre" /> <input type="text" name="apellidos"
 				th:field="*{apellidos}" placeholder="Apellidos" /> <input

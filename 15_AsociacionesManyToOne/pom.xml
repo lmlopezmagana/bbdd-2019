@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>14_AsociacionesManyToOne</artifactId>
+	<artifactId>15_AsociacionesManyToOne</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>14_AsociacionesManyToOne</name>
+	<name>15_AsociacionesManyToOne</name>
 	<description>Ejemplo de dos entidades con asociación ManyToOne</description>
 
 	<properties>

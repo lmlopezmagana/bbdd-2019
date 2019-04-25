@@ -16,6 +16,7 @@
 			<th>Nombre</th>
 			<th>Apellidos</th>
 			<th>email</th>
+			<th>Operaciones</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,6 +25,10 @@
 			<td th:text="${alumno.nombre}">Nombre</td>
 			<td th:text="${alumno.apellidos}">Apellidos</td>
 			<td th:text="${alumno.email}">Email</td>
+			<td>
+				<a href="#" th:href="@{/editar/{id}(id=${alumno.id})}">Editar</a> | 
+				<a href="#" th:href="@{/borrar/{id}(id=${alumno.id})}">Borrar</a>
+			</td>
 		</tr>
 	</tbody>
 </table>
