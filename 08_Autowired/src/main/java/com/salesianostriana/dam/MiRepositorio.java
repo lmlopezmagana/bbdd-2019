@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("donBosco")
 public class MiRepositorio {
 
 	List<String> findAll() {

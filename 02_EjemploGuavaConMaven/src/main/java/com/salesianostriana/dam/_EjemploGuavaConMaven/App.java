@@ -4,8 +4,8 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 /**
- * Hello world!
- *
+ * Esta clase sirve para....
+ * @author Luismi
  */
 public class App 
 {
@@ -21,4 +21,16 @@ public class App
 		System.out.println(empleados.inverse().get("Angel"));
     	
     }
+
+    /**
+     * Este es simplemente un método de ejemplo
+     * @param argument1 En realidad no vale para nada, pero ahí está
+     * @param argumento2 Este tampoco vale, pero siempre van en pareja
+     * @return Devuelve una cadena vacía, qué se le va a hacer
+     * @throws NullPointerException En algún caso, puede devolver dicha excepción
+     */
+    public String unMetodo(String argument1, int argumento2) throws NullPointerException {
+    	return "";
+    }
+    
 }

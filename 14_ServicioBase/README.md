@@ -14,7 +14,7 @@ Por eso, es sensato proporcionar una implementación base de un servicio abstrac
 Proponemos la siguiente implementación:
 
 ```java
-public class BaseService<T, ID, R extends JpaRepository<T, ID>> {
+public abstract class BaseService<T, ID, R extends JpaRepository<T, ID>> {
 
 	@Autowired
 	R repositorio;
