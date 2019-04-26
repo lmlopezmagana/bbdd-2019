@@ -1,0 +1,4 @@
+2019-04-26 13:31:36 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "ALYUMNO" no encontrada
+Table "ALYUMNO" not found; SQL statement:
+SELECT * FROM ALYUMNO [42102-199]
