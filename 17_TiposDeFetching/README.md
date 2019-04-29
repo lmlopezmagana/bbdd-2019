@@ -17,7 +17,7 @@ Cuando usamos **asociaciones**, JPA aplica por defecto una estrategia de fetchin
 | `@ManyToOne` | `EAGER` |
 | `@OneToOne` | `EAGER` |
 | `@OneToMany` | `LAZY` |
-| `@OneToMany` | `LAZY` |
+| `@ManyToMany` | `LAZY` |
 
 ## ¿Qué tipo de _fetching_ utilizar?
 
