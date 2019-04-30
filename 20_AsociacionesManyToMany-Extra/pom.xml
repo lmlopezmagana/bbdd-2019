@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>19_AsociacionesManyToMany-Bidi</artifactId>
+	<artifactId>18_AsociacionesManyToMany-Uni</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>19_AsociacionesManyToMany-Bidi</name>
-	<description>Ejemplo de dos entidades con asociación ManyToMany con tratamiento bidireccional</description>
+	<name>18_AsociacionesManyToMany-Uni</name>
+	<description>Ejemplo de dos entidades con asociación ManyToMany</description>
 
 	<properties>
 		<java.version>1.8</java.version>
