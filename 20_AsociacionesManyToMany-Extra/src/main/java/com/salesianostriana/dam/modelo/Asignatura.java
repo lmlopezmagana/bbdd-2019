@@ -7,17 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Clase que modela los datos de una Asignatura
@@ -37,15 +34,9 @@ public class Asignatura {
 	private String nombre;
 	private String profesor;
 	
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	@ManyToMany
-	//@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		joinColumns = @JoinColumn(name="asignatura_id"),
-		inverseJoinColumns = @JoinColumn(name="alumno_id")
-	)
-	private List<Alumno> alumnos = new ArrayList<>();
+	//@OneToMany(mappedBy="asignatura")
+	@OneToMany(mappedBy="asignatura", fetch = FetchType.EAGER)
+	private List<Notas> notas = new ArrayList<>();
 	
 	/**
 	 * @param nombre
@@ -57,22 +48,6 @@ public class Asignatura {
 	}
 	
 	
-	/**
-	 * Método auxiliar para manejar la asociación bidireccional con Alumno
-	 * @param a
-	 */
-	public void addAlumno(Alumno a) {
-		alumnos.add(a);
-		a.getAsignaturas().add(this);
-	}
 	
-	/**
-	 * Método auxiliar para manejar la asociación bidireccional con Alumno
-	 * @param a
-	 */
-	public void deleteAlumno(Alumno a) {
-		alumnos.remove(a);
-		a.getAsignaturas().remove(this);
-	}
 	
 }

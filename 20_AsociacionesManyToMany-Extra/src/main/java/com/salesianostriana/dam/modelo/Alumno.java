@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Clase que modela los datos más básicos de un alumno
@@ -35,11 +34,9 @@ public class Alumno {
 	private String apellidos;
 	private String email;
 	
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	@ManyToMany(mappedBy="alumnos")
-	//@ManyToMany(mappedBy="alumnos", fetch = FetchType.EAGER)
-	private List<Asignatura> asignaturas = new ArrayList<>();
+	//@OneToMany(mappedBy="alumno")
+	@OneToMany(mappedBy="alumno", fetch = FetchType.EAGER)
+	private List<Notas> notas = new ArrayList<>();
 	
 	
 	/**

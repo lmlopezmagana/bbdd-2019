@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>/home/luismi/Documentos/repos/bbdd-2019/19_AsociacionesManyToMany-Bidi/.README.md.html</title>
+<title>/home/luismi/Documentos/repos/bbdd-2019/20_AsociacionesManyToMany-Extra/.README.md.html</title>
 
 
 <style type="text/css">
@@ -639,155 +639,175 @@ function setDocumentScrollTop(ypos)
 
 </head>
 <body class="markdown-body">
-<h1> <a id="ejemplo-19---ejemplo-de-dos-entidades-con-una-asociaci&oacute;n-manytomany-tratamiento-bidireccional" class="anchor" href="#ejemplo-19---ejemplo-de-dos-entidades-con-una-asociaci%C3%B3n-manytomany-tratamiento-bidireccional" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 19 - Ejemplo de dos entidades con una asociaci&oacute;n ManyToMany (tratamiento bidireccional)</h1> 
-<p>Partimos desde el ejemplo <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/18_AsociacionesManyToMany-Uni">anterior</a></p> 
+<h1> <a id="ejemplo-20---ejemplo-de-dos-entidades-con-una-asociaci&oacute;n-manytomany-tratamiento-bidireccional-y-atributos-extra" class="anchor" href="#ejemplo-20---ejemplo-de-dos-entidades-con-una-asociaci%C3%B3n-manytomany-tratamiento-bidireccional-y-atributos-extra" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 20 - Ejemplo de dos entidades con una asociaci&oacute;n ManyToMany (tratamiento bidireccional) y atributos extra</h1> 
+<p>Partimos desde el ejemplo <a href="">anterior</a></p> 
 <h2> <a id="cu&aacute;l-es-nuestro-modelo-de-datos" class="anchor" href="#cu%C3%A1l-es-nuestro-modelo-de-datos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Cu&aacute;l es nuestro modelo de datos?</h2> 
 <p><a href="./uml.jpg" target="_blank" rel="noopener noreferrer"><img src="./uml.jpg" alt="diagrama uml" style="max-width:100%;" /></a></p> 
-<h2> <a id="tratamiento-bidireccional-de-una-asociaci&oacute;n-manytomany" class="anchor" href="#tratamiento-bidireccional-de-una-asociaci%C3%B3n-manytomany" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tratamiento bidireccional de una asociaci&oacute;n <code>@ManyToMany</code> </h2> 
-<p>El tratamiento <em>bidireccional</em> de una asociaci&oacute;n nos permite utilizar dicha asociaci&oacute;n desde las dos entidades que est&aacute;n conectadas. Partimos del c&oacute;digo del ejemplo anterior:</p> 
+<h2> <a id="asociaci&oacute;n-manytomany-con-atributos-extra" class="anchor" href="#asociaci%C3%B3n-manytomany-con-atributos-extra" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Asociaci&oacute;n <code>@ManyToMany</code> con atributos extra</h2> 
+<p>La implementaci&oacute;n de una asociaci&oacute;n <em>muchos-a-muchos</em> simple ha resultado ser muy sencilla (incluso en el tratamiento bidireccional). Sin embargo, para <strong>a&ntilde;adir atributos extra</strong>, necesitamos crear una nueva entidad, y hacer uso de algunas anotaciones nuevas.</p> 
+<h2> <a id="algo-de-teor&iacute;a" class="anchor" href="#algo-de-teor%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algo de teor&iacute;a</h2> 
+<h3> <a id="tipos-embeddable" class="anchor" href="#tipos-embeddable" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tipos <code>Embeddable</code> </h3> 
+<p>En alguna ocasi&oacute;n, puede que interesarnos agrupar un cierto conjunto de valores: supongamos que queremos manejar la <code>Localizacion</code> de una determinada <code>Oficina</code>. Una localizaci&oacute;n est&aacute; formada por una <code>direccion</code>, una <code>ciudad</code> y un <code>pais</code>. Realmente no queremos tratar una <code>Localizacion</code> como una entidad; su ciclo de vida siempre estar&aacute; asociado al de la <code>Oficina</code> correspondiente. Nos puede interesar agruparlo todo, por ejemplo, para dar un tratamiento integral.</p> 
+<p>JPA nos ofrece la anotaci&oacute;n <code>@Embeddable</code>, que nos permite generar una clase que ser&aacute; <em>encajable</em> ( <em>incrustable</em>, <em>embebible</em>) en otra entidad.</p> 
 <div class="highlight highlight-source-java">
- <pre><span class="pl-k">@Entity</span>
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Asignatura</span> {
+ <pre><span class="pl-k">@Embeddable</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Localizacion</span> {
 
-	<span class="pl-c"><span class="pl-c">//</span> Resto de c&oacute;digo</span>
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> direccion;
 	
-	<span class="pl-k">@ManyToMany</span>
-	<span class="pl-k">@JoinTable</span>(
-		<span class="pl-c1">joinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>asignatura_id<span class="pl-pds">&quot;</span></span>),
-		<span class="pl-c1">inverseJoinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>alumno_id<span class="pl-pds">&quot;</span></span>)
-	)
-	<span class="pl-k">private</span> <span class="pl-k">List&lt;<span class="pl-smi">Alumno</span>&gt;</span> alumnos <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> ciudad;
 	
-	<span class="pl-c"><span class="pl-c">//</span> Resto de c&oacute;digo</span>
-	
-}
-</pre>
-</div> 
-<p>Con esto, hemos visto que es suficiente para manejar la asociaci&oacute;n. Pero, &iquest;y si queremos conocer (o manejar) la lista de asignaturas de un <code>Alumno</code>?</p> 
-<p>Para hacerlo, tendr&iacute;amos que utilizar la misma anotaci&oacute;n <code>@ManyToMany</code> en la entidad <em>de enfrente</em>, es decir, en <code>Alumno</code>.</p> 
-<p>Veamoslo paso a paso.</p> 
-<h2> <a id="paso-1-modificar-la-entidad-alumno" class="anchor" href="#paso-1-modificar-la-entidad-alumno" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1: Modificar la entidad alumno</h2> 
-<div class="highlight highlight-source-java">
- <pre><span class="pl-k">@Entity</span>
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
-	
-	<span class="pl-c"><span class="pl-c">//</span> Resto de c&oacute;digo</span>
-	
-	<span class="pl-k">@ManyToMany</span>(<span class="pl-c1">mappedBy</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>alumnos<span class="pl-pds">&quot;</span></span>)
-	<span class="pl-k">private</span> <span class="pl-k">List&lt;<span class="pl-smi">Asignatura</span>&gt;</span> asignaturas <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
-	
-	<span class="pl-c"><span class="pl-c">//</span> Resto de c&oacute;digo</span>
-
-}
-</pre>
-</div> 
-<p>El atributo <code>mappedBy</code> nos permite indicar que la asociaci&oacute;n ya est&aacute; definida en otra entidad, y que este lado es <em>complementario</em> (para que no vuelva a crear todo el DDL; tan solo lo aprovechar&aacute;).</p> 
-<h2> <a id="paso-2-a&ntilde;adir-los-m&eacute;todos-helpers" class="anchor" href="#paso-2-a%C3%B1adir-los-m%C3%A9todos-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2: A&ntilde;adir los m&eacute;todos <em>helpers</em> </h2> 
-<p>Al igual que en el tratamiento bidireccional de las asociaciones <code>@OneToMany</code>, para hacer un tratamiento bidireccional de una asociaci&oacute;n <code>@ManyToOne</code> tambi&eacute;n necesitamos manejar la asociaci&oacute;n en ambos extremos, por lo que nos serviremos de un par de m&eacute;todos que lo har&aacute;n por nosotros.</p> 
-<p>Como en el ejemplo anterior decidimos, de alguna manera, que el lado <code>Asignatura</code> era el <em>propietario</em> de la asociaci&oacute;n, ser&aacute; donde a&ntilde;adamos los m&eacute;todos.</p> 
-<div class="highlight highlight-source-java">
- <pre><span class="pl-k">@Entity</span>
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Asignatura</span> {
-
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> pais;
 
 	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
-	
-	<span class="pl-k">@ManyToMany</span>
-	<span class="pl-k">@JoinTable</span>(
-		<span class="pl-c1">joinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>asignatura_id<span class="pl-pds">&quot;</span></span>),
-		<span class="pl-c1">inverseJoinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>alumno_id<span class="pl-pds">&quot;</span></span>)
-	)
-	<span class="pl-k">private</span> <span class="pl-k">List&lt;<span class="pl-smi">Alumno</span>&gt;</span> alumnos <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
-	
-	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
-	
-	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">addAlumno</span>(<span class="pl-smi">Alumno</span> <span class="pl-v">a</span>) {
-		alumnos<span class="pl-k">.</span>add(a);
-		a<span class="pl-k">.</span>getAsignaturas()<span class="pl-k">.</span>add(<span class="pl-c1">this</span>);
-	}
-	
-	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">deleteAlumno</span>(<span class="pl-smi">Alumno</span> <span class="pl-v">a</span>) {
-		alumnos<span class="pl-k">.</span>remove(a);
-		a<span class="pl-k">.</span>getAsignaturas()<span class="pl-k">.</span>remove(<span class="pl-c1">this</span>);
-	}
-	
 }
-</pre>
-</div> 
-<h2> <a id="paso-3-modificaci&oacute;n-de-una-de-las-entidades-para-registrar-la-asociaci&oacute;n-entre-clases" class="anchor" href="#paso-3-modificaci%C3%B3n-de-una-de-las-entidades-para-registrar-la-asociaci%C3%B3n-entre-clases" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 3: Modificaci&oacute;n de una de las entidades para registrar la asociaci&oacute;n entre clases</h2> 
-<p>En el caso del tratamiento unidireccional, necesitamos <em>ubicar</em> la asociaci&oacute;n en alguna de las dos entidades. &iquest;En cu&aacute;l? No hay ninguna premisa, salvo nuestro sentido com&uacute;n. En este caso, vamos a a&ntilde;adir la asociaci&oacute;n en la nueva entidad que hemos creado, <code>Asignatura</code>.</p> 
-<div class="highlight highlight-source-java">
- <pre><span class="pl-k">@Entity</span>
-<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Asignatura</span> {
+
+<span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Oficina</span> {
 
 	<span class="pl-k">@Id</span>
 	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span> <span class="pl-k">=</span> <span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
 	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+
+	<span class="pl-k">private</span> <span class="pl-smi">Localizacion</span> localizacion;
 	
-	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
-	<span class="pl-k">private</span> <span class="pl-smi">String</span> profesor;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> telefonoContacto;
 	
-	<span class="pl-k">@ManyToMany</span>
-	<span class="pl-k">@JoinTable</span>(
-		<span class="pl-c1">joinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>asignatura_id<span class="pl-pds">&quot;</span></span>),
-		<span class="pl-c1">inverseJoinColumns</span> <span class="pl-k">=</span> <span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>alumno_id<span class="pl-pds">&quot;</span></span>)
-	)
-	<span class="pl-k">private</span> <span class="pl-k">List&lt;<span class="pl-smi">Alumno</span>&gt;</span> alumnos <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;&gt;</span>();
-	
-	<span class="pl-k">public</span> <span class="pl-en">Asignatura</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">profesor</span>) {
-		<span class="pl-c1">this</span><span class="pl-k">.</span>nombre <span class="pl-k">=</span> nombre;
-		<span class="pl-c1">this</span><span class="pl-k">.</span>profesor <span class="pl-k">=</span> profesor;
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+
+}</pre>
+</div> 
+<p>Como podemos observar, un elemento interesante de la clase anotada con <code>Embeddable</code> es que no tiene un atributo identificador (<code>@Id</code>).</p> 
+<p>El DDL generado ser&iacute;a algo parecido a esto:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">Oficina</span> (
+	id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>,
+	direccion <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
+	ciudad <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
+	pais <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
+	telefonoContacto <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
+	<span class="pl-k">primary key</span> (id)
+)	</pre>
+</div> 
+<h3> <a id="identificadores-compuestos" class="anchor" href="#identificadores-compuestos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Identificadores compuestos</h3> 
+<p>Hasta ahora, todas nuestras entidades han estado identificadas mediante un <em>identificador</em> (valga la redundancia) que ha sido simple. De hecho, siempre hemos utilizado el siguente fragmento de c&oacute;digo:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Id</span>
+<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+<span class="pl-k">private</span> <span class="pl-k">long</span> id;</pre>
+</div> 
+<p>En determinados contextos podemos necesitar otro tipo de identificador, compuesto por m&aacute;s de un atributo.</p> 
+<p>JPA nos ofrece alguna estrategia para poder implementar esto, siempre y cuando se cumplan las siguientes reglas:</p> 
+<ul> 
+ <li>El identificador compuesto debe estar representado por una <em>clase de clave primaria</em>. Esta se puede definir con las anotaciones <code>@EmbeddId</code> o con la anotaci&oacute;n <code>@IdClass</code>.</li> 
+ <li>La <em>clase de clave primaria</em> debe ser p&uacute;blica y debe tener un constructor p&uacute;blico sin argumentos.</li> 
+ <li>La <em>clase de clave primaria</em> debe ser serializable.</li> 
+ <li>La <em>clase de clave primaria</em> debe definir los m&eacute;todos <code>equals</code> y <code>hashCode</code> de forma consistente.</li> 
+</ul> 
+<p>Los atributo que forman esta composici&oacute;n pueden ser b&aacute;sicos, compuestos o anotados con <code>@ManyToOne</code>.</p> 
+<p>Veamos el siguiente <a href="http://docs.jboss.org/hibernate/orm/5.4/userguide/html_single/Hibernate_User_Guide.html#identifiers-composite-aggregated" rel="nofollow">ejemplo de la documentaci&oacute;n de Hibernate</a></p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>(<span class="pl-c1">name</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>SystemUser<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">SystemUser</span> {
+
+	<span class="pl-k">@EmbeddedId</span>
+	<span class="pl-k">private</span> <span class="pl-c1">PK</span> pk;
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> name;
+
+	<span class="pl-c"><span class="pl-c">//</span>Getters and setters are omitted for brevity</span>
+}
+
+<span class="pl-k">@Embeddable</span>
+<span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">PK</span> <span class="pl-k">implements</span> <span class="pl-e">Serializable</span> {
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> subsystem;
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> username;
+
+	<span class="pl-k">public</span> <span class="pl-en">PK</span>(<span class="pl-smi">String</span> <span class="pl-v">subsystem</span>, <span class="pl-smi">String</span> <span class="pl-v">username</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>subsystem <span class="pl-k">=</span> subsystem;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>username <span class="pl-k">=</span> username;
 	}
+
+	<span class="pl-k">public</span> <span class="pl-en">PK</span>() {
+	}
+
+}</pre>
+</div> 
+<h3> <a id="uso-de-la-anotaci&oacute;n-mapsid" class="anchor" href="#uso-de-la-anotaci%C3%B3n-mapsid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso de la anotaci&oacute;n <code>@MapsId</code> </h3> 
+<p>JPA 2.0 agreg&oacute; soporte para identificadores derivados que permiten que una entidad tome prestado el identificador de una asociaci&oacute;n de muchos a uno o de uno a uno. La anotaci&oacute;n <code>@MapsId</code> tambi&eacute;n puede hacer referencia a columnas de un identificador <code>@EmbeddedId</code> (como va a ser nuestro caso).</p> 
+<h2> <a id="implementaci&oacute;n-de-la-soluci&oacute;n" class="anchor" href="#implementaci%C3%B3n-de-la-soluci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Implementaci&oacute;n de la soluci&oacute;n</h2> 
+<h3> <a id="qu&eacute;-tenemos-hasta-ahora" class="anchor" href="#qu%C3%A9-tenemos-hasta-ahora" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; tenemos hasta ahora?</h3> 
+<p>Tenemos implementadas ambas entidades, con sus respectivos repositorios y servicios. Adem&aacute;s, el tratamiento de la asociaci&oacute;n que tenemos implementado es bidireccional.</p> 
+<h3> <a id="paso-1-creamos-la-nueva-clase-que-va-a-mapear-la-clave-primaria-de-la-asociaci&oacute;n-muchos-a-muchos" class="anchor" href="#paso-1-creamos-la-nueva-clase-que-va-a-mapear-la-clave-primaria-de-la-asociaci%C3%B3n-muchos-a-muchos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1: Creamos la nueva clase que va a <em>mapear</em> la clave primaria de la asociaci&oacute;n <em>muchos-a-muchos</em>.</h3> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Data</span> <span class="pl-k">@NoArgsConstructor</span>
+<span class="pl-k">@Embeddable</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">NotasPK</span> <span class="pl-k">implements</span> <span class="pl-e">Serializable</span> {
 	
+	<span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-k">final</span> <span class="pl-k">long</span> serialVersionUID <span class="pl-k">=</span> <span class="pl-c1">8682909319466153524L</span>;
 	
+	<span class="pl-k">private</span> <span class="pl-k">long</span> alumno_id;
 	
+	<span class="pl-k">private</span> <span class="pl-k">long</span> asignatura_id;	
+
 }
 </pre>
 </div> 
-<p>Si ejecutamos el proyecto, podemos apreciar el DDL generado</p> 
-<div class="highlight highlight-source-sql">
- <pre>   <span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">alumno</span> (
-       id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>,
-        apellidos <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
-        email <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
-        nombre <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
-        <span class="pl-k">primary key</span> (id)
-    ); 
-    
-    <span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">asignatura</span> (
-       id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>,
-        nombre <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
-        profesor <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>),
-        <span class="pl-k">primary key</span> (id)
-    );
-
-    
-    <span class="pl-k">create</span> <span class="pl-k">table</span> <span class="pl-en">asignatura_alumnos</span> (
-       asignatura_id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>,
-        alumno_id <span class="pl-k">bigint</span> <span class="pl-k">not null</span>
-    );
-    
-    <span class="pl-k">alter</span> <span class="pl-k">table</span> asignatura_alumnos 
-       add <span class="pl-k">constraint</span> FKscjojadihey4wi6ic169m0va0 
-       <span class="pl-k">foreign key</span> (alumno_id) 
-       <span class="pl-k">references</span> alumno;
-    
-    <span class="pl-k">alter</span> <span class="pl-k">table</span> asignatura_alumnos 
-       add <span class="pl-k">constraint</span> FK4l3r7vypusyisar8g98g32gm3 
-       <span class="pl-k">foreign key</span> (asignatura_id) 
-       <span class="pl-k">references</span> asignatura;</pre>
-</div> 
-<h2> <a id="paso-4-importante-hay-que-evitar-las-referencias-circulares" class="anchor" href="#paso-4-importante-hay-que-evitar-las-referencias-circulares" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 4: &iexcl;IMPORTANTE! Hay que evitar las referencias circulares</h2> 
-<p>Al igual que nos suced&iacute;a en las asociaciones bidireccional <code>@ManyToOne</code> - <code>@OneToMany</code>, necesitamos evitar las referencias circulares.</p> 
-<h2> <a id="c&oacute;mo-utilizar-la-asociaci&oacute;n" class="anchor" href="#c%C3%B3mo-utilizar-la-asociaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;C&oacute;mo <em>utilizar</em> la asociaci&oacute;n?</h2> 
-<p>En este caso, siendo bidireccional, la tenemos que manejar a trav&eacute;s de los m&eacute;todos helpers.</p> 
+<p>Como podemos comprobar, cumplimos con las reglas estipuladas por JPA:</p> 
+<ul> 
+ <li>Clase p&uacute;blica</li> 
+ <li>Implementa serializable</li> 
+ <li>Gracias a Lombok, tenemos un constructor p&uacute;blico sin argumentos, y la implementaci&oacute;n de <code>equals</code> y <code>hashCode</code>.</li> 
+</ul> 
+<h3> <a id="paso-2-creamos-la-nuevo-entidad-que-va-a-mapear-la-asociaci&oacute;n-muchos-a-muchos" class="anchor" href="#paso-2-creamos-la-nuevo-entidad-que-va-a-mapear-la-asociaci%C3%B3n-muchos-a-muchos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2: Creamos la nuevo entidad que va a <em>mapear</em> la asociaci&oacute;n <em>muchos-a-muchos</em>.</h3> 
 <div class="highlight highlight-source-java">
- <pre><span class="pl-smi">Asignatura</span> basesDeDatos <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Asignatura</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>Bases de datos<span class="pl-pds">&quot;</span></span>, <span class="pl-s"><span class="pl-pds">&quot;</span>Luis Miguel L&oacute;pez<span class="pl-pds">&quot;</span></span>);
-asignaturaServicio<span class="pl-k">.</span>save(basesDeDatos);
-			
-nuevos<span class="pl-k">.</span>forEach(basesDeDatos<span class="pl-k">::</span>addAlumno);
-asignaturaServicio<span class="pl-k">.</span>save(basesDeDatos);
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Notas</span> {
+	
+	<span class="pl-k">@EmbeddedId</span>
+	<span class="pl-k">private</span> <span class="pl-smi">NotasPK</span> id;
+	
+	<span class="pl-k">@ManyToOne</span>
+	<span class="pl-k">@MapsId</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>alumno_id<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>alumno_id<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">private</span> <span class="pl-smi">Alumno</span> alumno;	
+	
+	
+	<span class="pl-k">@ManyToOne</span>
+	<span class="pl-k">@MapsId</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>asignatura_id<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">@JoinColumn</span>(<span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>asignatura_id<span class="pl-pds">&quot;</span></span>)
+	<span class="pl-k">private</span> <span class="pl-smi">Asignatura</span> asignatura;
+	
+	<span class="pl-k">private</span> <span class="pl-k">int</span> primeraEv;
+	<span class="pl-k">private</span> <span class="pl-k">int</span> segundaEv;
+	<span class="pl-k">private</span> <span class="pl-k">int</span> terceraEv;
+	<span class="pl-k">private</span> <span class="pl-k">int</span> notaFinal;
+	
+	
+	<span class="pl-k">public</span> <span class="pl-en">Notas</span>(<span class="pl-smi">Alumno</span> <span class="pl-v">alumno</span>, <span class="pl-smi">Asignatura</span> <span class="pl-v">asignatura</span>, <span class="pl-k">int</span> <span class="pl-v">primeraEv</span>, <span class="pl-k">int</span> <span class="pl-v">segundaEv</span>, <span class="pl-k">int</span> <span class="pl-v">terceraEv</span>, <span class="pl-k">int</span> <span class="pl-v">notaFinal</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>alumno <span class="pl-k">=</span> alumno;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>asignatura <span class="pl-k">=</span> asignatura;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>primeraEv <span class="pl-k">=</span> primeraEv;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>segundaEv <span class="pl-k">=</span> segundaEv;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>terceraEv <span class="pl-k">=</span> terceraEv;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>notaFinal <span class="pl-k">=</span> notaFinal;
+	}	
+
+}
 </pre>
+</div> 
+<p>Como podemos observar, vamos a <strong>romper nuestra asociaci&oacute;n <code>@ManyToMany</code> para utilizar dos conjuntos de asociaci&oacute;nes <code>@ManyToOne</code> + <code>@OneToMany</code>.</strong> En esta entidad tenemos las asociaciones <code>@ManyToOne</code>.</p> 
+<p>Como hemos visto anteriormente en la teor&iacute;a, podemos destacar dos cosas:</p> 
+<ul> 
+ <li>Usamos <code>@EmbeddId</code> para marcar la clave primaria (en lugar de usar <code>@Id</code>, como ven&iacute;amos haciendo hasta ahora`).</li> 
+ <li>Marcamos los campos de tipo <code>Alumno</code> y <code>Asignatura</code> con <code>@MapsId</code>. Con esto conseguimos vincular cada campo con una parte de la clave primaria, y son las claves externas de una asociaci&oacute;n <em>muchos-a-uno</em>.</li> 
+</ul> 
+<h3> <a id="paso-3-modificaci&oacute;n-de-las-clases-alumno-y-asignatura" class="anchor" href="#paso-3-modificaci%C3%B3n-de-las-clases-alumno-y-asignatura" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 3: Modificaci&oacute;n de las clases <code>Alumno</code> y <code>Asignatura</code>.</h3> 
+<p>Ahora, tenemos que modificar ambas clases para transformar nuestra asociaci&oacute;n <code>@ManyToMany</code> en el conjunto <code>@ManyToOne</code> + <code>@OneToMany</code>. En <code>Alumno</code> y <code>Asignatura</code> ir&aacute;n los extremos <code>@OneToMany</code>.</p> 
+<div class="highlight highlight-source-java">
+ <pre></pre>
 </div>
 </body>
 </html>
