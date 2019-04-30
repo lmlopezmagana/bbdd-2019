@@ -59,7 +59,7 @@ public class Application {
 			System.out.println("\n\nDatos almacenados");
 			
 			System.out.println(cursoAlmacenado);
-			// System.out.println(cursoAlmacenado.getAlumnos());
+			//System.out.println(cursoAlmacenado.getAlumnos());
 			
 			alumnosAlmacenados.forEach(System.out::println);
 			
