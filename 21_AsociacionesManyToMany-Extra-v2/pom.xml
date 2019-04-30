@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>20_AsociacionesManyToMany-Extra</artifactId>
+	<artifactId>21_AsociacionesManyToMany-Extra-v2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>20_AsociacionesManyToMany-Extra</name>
-	<description>Ejemplo de dos entidades con asociación ManyToMany con atributos extra (v1)</description>
+	<name>21_AsociacionesManyToMany-Extra-v2</name>
+	<description>Ejemplo de dos entidades con asociación ManyToMany con atributos extra (v2)</description>
 
 	<properties>
 		<java.version>1.8</java.version>

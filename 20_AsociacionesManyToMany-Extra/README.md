@@ -1,7 +1,7 @@
 
-# Ejemplo 20 - Ejemplo de dos entidades con una asociación ManyToMany (tratamiento bidireccional) y atributos extra
+# Ejemplo 20 - Ejemplo de dos entidades con una asociación ManyToMany y atributos extra
 
-Partimos desde el ejemplo [anterior]()
+Partimos desde el ejemplo [anterior](https://github.com/lmlopezmagana/bbdd-2019/tree/master/19_AsociacionesManyToMany-Bidi)
 
 ## ¿Cuál es nuestro modelo de datos?
 
@@ -137,9 +137,9 @@ public class NotasPK implements Serializable {
 	
 	private static final long serialVersionUID = 8682909319466153524L;
 	
-	private long alumno_id;
+	long alumno_id;
 	
-	private long asignatura_id;	
+	long asignatura_id;	
 
 }
 
@@ -203,8 +203,86 @@ Como hemos visto anteriormente en la teoría, podemos destacar dos cosas:
 Ahora, tenemos que modificar ambas clases para transformar nuestra asociación `@ManyToMany` en el conjunto `@ManyToOne` + `@OneToMany`. En `Alumno` y `Asignatura` irán los extremos `@OneToMany`.
 
 ```java
+@Entity
+public class Alumno {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	
+	private String nombre;
+	private String apellidos;
+	private String email;
+	
+	@OneToMany(mappedBy="alumno")
+	private List<Notas> notas = new ArrayList<>();
+	
+	// Resto de métodos y atributos
+
+}
 
 ```
+
+```java
+@Entity
+public class Asignatura {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	private String nombre;
+	private String profesor;
+	
+	@OneToMany(mappedBy="asignatura")
+	private List<Notas> notas = new ArrayList<>();
+	
+	// Resto del código
+}
+```
+
+### Paso 4: Creación del repositorio y servicios para la clase `Notas`.
+
+Lo realizamos como en otras ocasiones:
+
+```java
+public interface NotasRepository extends JpaRepository<Notas, NotasPK>{
+
+}
+```
+
+```java
+@Service
+public class NotasServicio extends BaseService<Notas, NotasPK, NotasRepository>{
+
+}
+```
+### Paso 5: Utilización de la nueva clase de asociación
+
+```java
+Alumno antonio = new Alumno("Antonio", "Pérez", "antonio.perez@gmail.com");
+alumnoServicio.save(antonio);
+			
+Asignatura basesDeDatos = new Asignatura("Bases de datos", "Luis Miguel López");
+asignaturaServicio.save(basesDeDatos);
+			
+Notas notaAntonio = new Notas();
+notaAntonio.setId(new NotasPK());
+notaAntonio.setAlumno(antonio);
+notaAntonio.setAsignatura(basesDeDatos);
+notaAntonio.setPrimeraEv(10);
+notaAntonio.setSegundaEv(10);
+notaAntonio.setTerceraEv(10);
+notaAntonio.setNotaFinal(10);
+notasServicio.save(notaAntonio);
+```
+
+### Paso 6: Tratamiento bidireccional y no olvidar evitar referencias circulares
+
+Como hemos comprobado, hemos pasado **de una asociación `@ManyToMany` bidireccional** a **dos asociaciones `@ManyToOne` + `@OneToMany`**. No hemos implementado el tratamiento bidireccional a través de métodos _helpers_ por no estimarlo conveniente para este ejemplo. Quedaría **a elección del usuario el poder hacerlo**.
+
+Sí que necesitaríamos excluir las listas en los métodos `equals`, `hashCode` y `toString` para evitar referencias circulares.
+
 
 
 
