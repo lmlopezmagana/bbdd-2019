@@ -31,7 +31,8 @@ public class Alumno {
 	private String apellidos;
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private Curso curso;
 	
 	

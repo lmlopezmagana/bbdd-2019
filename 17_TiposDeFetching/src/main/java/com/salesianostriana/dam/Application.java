@@ -43,10 +43,7 @@ public class Application {
 
 			nuevos.forEach(alumnoServicio::edit);
 
-			
-
-			
-			nuevoCurso.getAlumnos().forEach(System.out::println);
+			// nuevoCurso.getAlumnos().forEach(System.out::println);
 
 			System.out.println(nuevoCurso);
 			System.out.println(nuevoCurso.getAlumnos());
@@ -58,10 +55,12 @@ public class Application {
 			
 			System.out.println("\n\nDatos almacenados");
 			
-			//System.out.println(cursoAlmacenado);
-			// System.out.println(cursoAlmacenado.getAlumnos());
+			System.out.println(cursoAlmacenado);
+			//System.out.println(cursoAlmacenado.getAlumnos());
+			alumnoServicio.buscarPorCurso(cursoAlmacenado).forEach(System.out::println);
 			
-			alumnosAlmacenados.forEach(System.out::println);
+			
+			//alumnosAlmacenados.forEach(System.out::println);
 			
 		};
 	}

@@ -14,4 +14,5 @@ import com.salesianostriana.dam.modelo.Curso;
  */
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 
+	
 }
