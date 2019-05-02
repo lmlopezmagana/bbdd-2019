@@ -646,6 +646,164 @@ function setDocumentScrollTop(ypos)
  <li><a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html" rel="nofollow"><code>java.time.LocalDate</code></a></li> 
  <li><a href="https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html" rel="nofollow"><code>java.time.LocalDateTime</code></a></li> 
 </ul> 
-<p>El api de persistencia JPA, sin embargo, no ha introducido hasta la versi&oacute;n 2.2 (que es la actual) la posibilidad de manejar de <em>forma nativa</em> estos tipos de datos. Hasta ahora, ten&iacute;an que usarse conversores o soluciones propietarias para ello. Podemos utilizar Hibernate, desde su versi&oacute;n 5.3, como <em>vendor</em> de JPA 2.2, para as&iacute; aprovechar esta funcionalidad.</p>
+<p>El api de persistencia JPA, sin embargo, no ha introducido hasta la versi&oacute;n 2.2 (que es la actual) la posibilidad de manejar de <em>forma nativa</em> estos tipos de datos. Hasta ahora, ten&iacute;an que usarse conversores o soluciones propietarias para ello. Podemos utilizar Hibernate, desde su versi&oacute;n 5.3, como <em>vendor</em> de JPA 2.2, para as&iacute; aprovechar esta funcionalidad.</p> 
+<p>Por tanto, para manejar fechas de <em>java.time</em> con una entidad, tan solo tenemos que utilizarlas como otro tipo de dato b&aacute;sico:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Alumno</span> {
+	
+	<span class="pl-k">@Id</span>
+	<span class="pl-k">@GeneratedValue</span>(<span class="pl-c1">strategy</span><span class="pl-k">=</span><span class="pl-smi">GenerationType</span><span class="pl-c1"><span class="pl-k">.</span>AUTO</span>)
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">LocalDate</span> fechaNacimiento;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">LocalDateTime</span> fechaUltimoAcceso;
+	
+}</pre>
+</div> 
+<p>Para crear una nueva instancia y almacenarla en la base de datos, tambi&eacute;n ser&iacute;a igual que otra entidad como las que hemos utilizado hasta ahora:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Alumno</span> alumno <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Alumno</span>();
+alumno<span class="pl-k">.</span>setNombre(<span class="pl-s"><span class="pl-pds">&quot;</span>Pepe<span class="pl-pds">&quot;</span></span>);
+alumno<span class="pl-k">.</span>setApellidos(<span class="pl-s"><span class="pl-pds">&quot;</span>P&eacute;rez P&eacute;rez<span class="pl-pds">&quot;</span></span>);
+alumno<span class="pl-k">.</span>setEmail(<span class="pl-s"><span class="pl-pds">&quot;</span>pepe.perez@perezyperez.com<span class="pl-pds">&quot;</span></span>);
+alumno<span class="pl-k">.</span>setFechaNacimiento(<span class="pl-smi">LocalDate</span><span class="pl-k">.</span>of(<span class="pl-c1">1990</span>, <span class="pl-c1">1</span>, <span class="pl-c1">1</span>));
+alumno<span class="pl-k">.</span>setFechaUltimoAcceso(<span class="pl-smi">LocalDateTime</span><span class="pl-k">.</span>now());
+			
+servicio<span class="pl-k">.</span>save(alumno);
+</pre>
+</div> 
+<h2> <a id="manejo-de-fechas-javatime-desde-thymeleaf" class="anchor" href="#manejo-de-fechas-javatime-desde-thymeleaf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manejo de fechas <em>java.time</em> desde Thymeleaf</h2> 
+<p>Para manejar las fechas de Java 8 desde Thymeleaf s&iacute; que necesitamos hacer algo m&aacute;s.</p> 
+<h3> <a id="nueva-dependencia-en-el-pomxml" class="anchor" href="#nueva-dependencia-en-el-pomxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Nueva dependencia en el `pom.xml'</h3> 
+<p>En primer lugar, tenemos que a&ntilde;adir una dependecia de elementos <em>extra</em> para fechas de Java 8.</p> 
+<div class="highlight highlight-text-xml">
+ <pre>&lt;<span class="pl-ent">dependency</span>&gt;
+	&lt;<span class="pl-ent">groupId</span>&gt;org.thymeleaf.extras&lt;/<span class="pl-ent">groupId</span>&gt;
+	&lt;<span class="pl-ent">artifactId</span>&gt;thymeleaf-extras-java8time&lt;/<span class="pl-ent">artifactId</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre>
+</div> 
+<p>Al trabajar con Spring Boot, nos <em>ahorramos</em> tener que hacer algunas cosas:</p> 
+<ul> 
+ <li>No tenemos que a&ntilde;adir la versi&oacute;n de la dependencia</li> 
+ <li>No tenemos que configurar (ya lo hace Spring Boot) esta librer&iacute;a.</li> 
+</ul> 
+<h3> <a id="qu&eacute;-ofrece-thymeleaf-para-las-fechas-de-java-8" class="anchor" href="#qu%C3%A9-ofrece-thymeleaf-para-las-fechas-de-java-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>&iquest;Qu&eacute; ofrece Thymeleaf para las fechas de Java 8?</h3> 
+<p>Si consultamos la <a href="https://github.com/thymeleaf/thymeleaf-extras-java8time">documentaci&oacute;n de la librer&iacute;a</a> podemos ver como tenemos a nuestra disposici&oacute;n otro nuevo interfaz, <code>Temporal</code>, con varios subinterfaces (asociados a los diferentes tipos de datos de <em>java.time</em>) y con muchos m&eacute;todos de utilidad. La lista la tienes a continuaci&oacute;n:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * =============================================================================</span>
+<span class="pl-c"> * See javadoc API for class org.thymeleaf.extras.java8time.expression.Temporals</span>
+<span class="pl-c"> * =============================================================================</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Format date with the standard locale format</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>format(temporal)}
+${#temporals<span class="pl-k">.</span>arrayFormat(temporalsArray)}
+${#temporals<span class="pl-k">.</span>listFormat(temporalsList)}
+${#temporals<span class="pl-k">.</span>setFormat(temporalsSet)}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Format date with the standard format for the provided locale</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>format(temporal, locale)}
+${#temporals<span class="pl-k">.</span>arrayFormat(temporalsArray, locale)}
+${#temporals<span class="pl-k">.</span>listFormat(temporalsList, locale)}
+${#temporals<span class="pl-k">.</span>setFormat(temporalsSet, locale)}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Format date with the specified pattern</span>
+<span class="pl-c"> * SHORT, MEDIUM, LONG and FULL can also be specified to used the default java.time.format.FormatStyle patterns</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>format(temporal, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>)}
+${#temporals<span class="pl-k">.</span>arrayFormat(temporalsArray, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>)}
+${#temporals<span class="pl-k">.</span>listFormat(temporalsList, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>)}
+${#temporals<span class="pl-k">.</span>setFormat(temporalsSet, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>)}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Format date with the specified pattern and locale</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>format(temporal, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>, locale)}
+${#temporals<span class="pl-k">.</span>arrayFormat(temporalsArray, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>, locale)}
+${#temporals<span class="pl-k">.</span>listFormat(temporalsList, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>, locale)}
+${#temporals<span class="pl-k">.</span>setFormat(temporalsSet, <span class="pl-s"><span class="pl-pds">'</span>dd/MMM/yyyy HH:mm<span class="pl-pds">'</span></span>, locale)}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Format date with ISO-8601 format</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>formatISO(temporal)}
+${#temporals<span class="pl-k">.</span>arrayFormatISO(temporalsArray)}
+${#temporals<span class="pl-k">.</span>listFormatISO(temporalsList)}
+${#temporals<span class="pl-k">.</span>setFormatISO(temporalsSet)}
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Obtain date properties</span>
+<span class="pl-c"> * Also works with arrays, lists or sets</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>day(temporal)}                    <span class="pl-c"><span class="pl-c">//</span> also arrayDay(...), listDay(...), etc.</span>
+${#temporals<span class="pl-k">.</span>month(temporal)}                  <span class="pl-c"><span class="pl-c">//</span> also arrayMonth(...), listMonth(...), etc.</span>
+${#temporals<span class="pl-k">.</span>monthName(temporal)}              <span class="pl-c"><span class="pl-c">//</span> also arrayMonthName(...), listMonthName(...), etc.</span>
+${#temporals<span class="pl-k">.</span>monthNameShort(temporal)}         <span class="pl-c"><span class="pl-c">//</span> also arrayMonthNameShort(...), listMonthNameShort(...), etc.</span>
+${#temporals<span class="pl-k">.</span>year(temporal)}                   <span class="pl-c"><span class="pl-c">//</span> also arrayYear(...), listYear(...), etc.</span>
+${#temporals<span class="pl-k">.</span>dayOfWeek(temporal)}              <span class="pl-c"><span class="pl-c">//</span> also arrayDayOfWeek(...), listDayOfWeek(...), etc.</span>
+${#temporals<span class="pl-k">.</span>dayOfWeekName(temporal)}          <span class="pl-c"><span class="pl-c">//</span> also arrayDayOfWeekName(...), listDayOfWeekName(...), etc.</span>
+${#temporals<span class="pl-k">.</span>dayOfWeekNameShort(temporal)}     <span class="pl-c"><span class="pl-c">//</span> also arrayDayOfWeekNameShort(...), listDayOfWeekNameShort(...), etc.</span>
+${#temporals<span class="pl-k">.</span>hour(temporal)}                   <span class="pl-c"><span class="pl-c">//</span> also arrayHour(...), listHour(...), etc.</span>
+${#temporals<span class="pl-k">.</span>minute(temporal)}                 <span class="pl-c"><span class="pl-c">//</span> also arrayMinute(...), listMinute(...), etc.</span>
+${#temporals<span class="pl-k">.</span>second(temporal)}                 <span class="pl-c"><span class="pl-c">//</span> also arraySecond(...), listSecond(...), etc.</span>
+${#temporals<span class="pl-k">.</span>nanosecond(temporal)}             <span class="pl-c"><span class="pl-c">//</span> also arrayNanosecond(...), listNanosecond(...), etc.</span>
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Create temporal (java.time.Temporal) objects from its components</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>create(year,month,day)}                                <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDate</span>
+${#temporals<span class="pl-k">.</span>create(year,month,day,hour,minute)}                    <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span>
+${#temporals<span class="pl-k">.</span>create(year,month,day,hour,minute,second)}             <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span>
+${#temporals<span class="pl-k">.</span>create(year,month,day,hour,minute,second,nanosecond)}  <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span>
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Create a temporal (java.time.Temporal) object for the current date and time</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>createNow()}                      <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span>
+${#temporals<span class="pl-k">.</span>createNowForTimeZone(zoneId)}     <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.ZonedDateTime</span>
+${#temporals<span class="pl-k">.</span>createToday()}                    <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDate</span>
+${#temporals<span class="pl-k">.</span>createTodayForTimeZone(zoneId)}   <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDate</span>
+
+<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c"> * Create a temporal (java.time.Temporal) object for the provided date</span>
+<span class="pl-c"> <span class="pl-c">*/</span></span>
+${#temporals<span class="pl-k">.</span>createDate(isoDate)}              <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDate</span>
+${#temporals<span class="pl-k">.</span>createDateTime(isoDate)}          <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span>
+${#temporals<span class="pl-k">.</span>createDate(isoDate, pattern)}     <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDate</span>
+${#temporals<span class="pl-k">.</span>createDateTime(isoDate, pattern)} <span class="pl-c"><span class="pl-c">//</span> return a instance of java.time.LocalDateTime</span></pre>
+</div> 
+<h3> <a id="y-en-los-formularios" class="anchor" href="#y-en-los-formularios" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Y en los formularios</h3> 
+<p>Para poder trabajar con los formularios correctamente, necesitamos hacer una transformaci&oacute;n del formato de fecha (que viene en un <code>String</code>) desde el formulario para hacer un <em>binding</em> correcto con nuestro <em>Command Object</em> u objeto entidad. Para ello, utilizamos la anotaci&oacute;n de Spring <code>@DateTimeFormat</code> con el patr&oacute;n correcto. He aqu&iacute; un ejemplo:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@DateTimeFormat</span>(<span class="pl-c1">pattern</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>yyyy-MM-dd<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">private</span> <span class="pl-smi">LocalDate</span> fechaNacimiento;	</pre>
+</div> 
+<p>El formulario ser&iacute;a como cualquier otro que incluya un campo de tipo <code>dateTime</code>:</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">form</span> <span class="pl-e">method</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>POST<span class="pl-pds">&quot;</span></span> <span class="pl-e">action</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>#<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:action</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/nuevo/submit}<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:object</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${alumno}<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>text<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>nombre<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:field</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>*{nombre}<span class="pl-pds">&quot;</span></span> <span class="pl-e">placeholder</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>Nombre...<span class="pl-pds">&quot;</span></span>/&gt;
+	&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>text<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>apellidos<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:field</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>*{apellidos}<span class="pl-pds">&quot;</span></span> <span class="pl-e">placeholder</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>Apellidos...<span class="pl-pds">&quot;</span></span> /&gt; 
+	&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>email<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>email<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:field</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>*{email}<span class="pl-pds">&quot;</span></span> <span class="pl-e">placeholder</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>Email...<span class="pl-pds">&quot;</span></span> /&gt;
+	&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>date<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>fechaNacimiento<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:field</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>*{fechaNacimiento}<span class="pl-pds">&quot;</span></span> /&gt;
+	&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>submit<span class="pl-pds">&quot;</span></span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>enviar<span class="pl-pds">&quot;</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>Enviar<span class="pl-pds">&quot;</span></span> /&gt;
+&lt;/<span class="pl-ent">form</span>&gt;</pre>
+</div>
 </body>
 </html>

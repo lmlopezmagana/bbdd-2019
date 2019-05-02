@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Listado de alumnos</title>
+</head>
+<body>
+	<a href="#" th:href="@{/nuevo}">Insertar un nuevo alumno</a>
+	<br/><br/>
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellidos</th>
+				<th>Email</th>
+				<th>Fecha de nacimiento</th>
+				<th>Fecha de último acceso</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="alumno : ${alumnos}">
+				<td th:text="${alumno.nombre}">Nombre</td>
+				<td th:text="${alumno.apellidos}">Nombre</td>
+				<td th:text="${alumno.email}">Nombre</td>
+				<td th:text="${#temporals.format(alumno.fechaNacimiento)}">Nombre</td>
+				<td th:text="${#temporals.format(alumno.fechaUltimoAcceso)}">Nombre</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

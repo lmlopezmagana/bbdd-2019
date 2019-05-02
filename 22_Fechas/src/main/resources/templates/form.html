@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#formulario {
+	width: 500px;
+	padding-top: 20px;
+}
+
+#formulario input {
+	margin-top: 10px;
+	display: block;
+}
+
+input[type="text"], input[type="email"]  {
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<form method="POST" action="#" th:action="@{/nuevo/submit}" th:object="${alumno}">
+		<input type="text" name="nombre" th:field="*{nombre}" placeholder="Nombre..."/>
+		<input type="text" name="apellidos" th:field="*{apellidos}" placeholder="Apellidos..." /> 
+		<input type="email" name="email" th:field="*{email}" placeholder="Email..." />
+		<input type="date" name="fechaNacimiento" th:field="*{fechaNacimiento}" />
+		<input type="submit" name="enviar" value="Enviar" />
+
+	</form>
+</body>
+</html>

@@ -1,5 +1,8 @@
 package com.salesianostriana.dam;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +22,14 @@ public class Application {
 	public CommandLineRunner init(AlumnoServicio servicio) {
 		return args -> {
 			
-			servicio.save(new Alumno("Luis Miguel","López Magaña","luismi.lopez@salesianos.edu"));
-			servicio.save(new Alumno("Miguel","Campos Rivera","miguel.campos@salesianos.edu"));
+			Alumno alumno = new Alumno();
+			alumno.setNombre("Pepe");
+			alumno.setApellidos("Pérez Pérez");
+			alumno.setEmail("pepe.perez@perezyperez.com");
+			alumno.setFechaNacimiento(LocalDate.of(1990, 1, 1));
+			alumno.setFechaUltimoAcceso(LocalDateTime.now());
+			
+			servicio.save(alumno);
 			
 			
 			servicio.findAll().forEach(System.out::println);
