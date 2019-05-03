@@ -13,7 +13,7 @@
 	<artifactId>22_Fechas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>22_Fechas</name>
-	<description>Ejemplo de creación de un servicio base para poder reutilizarlo</description>
+	<description>Ejemplo de manejo de fechas de Java 8 con Spring Data JPA y Thymeleaf</description>
 
 	<properties>
 		<java.version>1.8</java.version>
