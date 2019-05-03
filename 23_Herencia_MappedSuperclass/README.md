@@ -133,5 +133,12 @@ Para esta solución, hay que tener en cuenta que:
 
 Al utilizar algunas anotaciones de lombok con herencia, podemos tener una pequeña dificultad. Y es que por defecto, las anotaciones `@EqualsAndHashcode` y `@ToString` tienen una propiedad, llamada `callSuper` establecida a `false`.
 
+Para solucionarlo, realizamos lo siguiente:
 
-Para más información se puede consultar el siguiente [enlace](https://projectlombok.org/features/EqualsAndHashCode)
+- _Deconstruir_ la etiqueta `@Data` en sus componentes: `@Getter`, `@Setter`
+- Añadir como en otras ocasiones `@NoArgsConstructor`
+- Para los métodos `equals`, `hashCode` y `toString` tenemos dos soluciones:
+	- Implementarlos a mano (lo cual es altamente recomendable, ya que nos permitirá afinar al máximo el resultado)
+	- Utilizar las anotaciones `@EqualsAndHashcode` y `@ToString`, estableciendo en ambas la propiedad `callSuper = true`. De esta manera, a nivel interno, se utilizan los métodos `equals`, `hashCode` y `toString` de la clase base en la implementación de dichos métodos en la clase hija.
+	
+Para más información se puede consultar el siguiente [enlace](https://projectlombok.org/features/EqualsAndHashCode).
