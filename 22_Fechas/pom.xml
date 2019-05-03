@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>14_ServicioBase</artifactId>
+	<artifactId>22_Fechas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>14_ServicioBase</name>
+	<name>22_Fechas</name>
 	<description>Ejemplo de creación de un servicio base para poder reutilizarlo</description>
 
 	<properties>
