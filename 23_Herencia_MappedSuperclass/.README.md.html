@@ -750,6 +750,16 @@ function setDocumentScrollTop(ypos)
 </ul> 
 <h2> <a id="una-palabra-sobre-lombok" class="anchor" href="#una-palabra-sobre-lombok" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Una palabra sobre Lombok</h2> 
 <p>Al utilizar algunas anotaciones de lombok con herencia, podemos tener una peque&ntilde;a dificultad. Y es que por defecto, las anotaciones <code>@EqualsAndHashcode</code> y <code>@ToString</code> tienen una propiedad, llamada <code>callSuper</code> establecida a <code>false</code>.</p> 
-<p>Para m&aacute;s informaci&oacute;n se puede consultar el siguiente <a href="https://projectlombok.org/features/EqualsAndHashCode" rel="nofollow">enlace</a></p>
+<p>Para solucionarlo, realizamos lo siguiente:</p> 
+<ul> 
+ <li> <em>Deconstruir</em> la etiqueta <code>@Data</code> en sus componentes: <code>@Getter</code>, <code>@Setter</code> </li> 
+ <li>A&ntilde;adir como en otras ocasiones <code>@NoArgsConstructor</code> </li> 
+ <li>Para los m&eacute;todos <code>equals</code>, <code>hashCode</code> y <code>toString</code> tenemos dos soluciones: 
+  <ul> 
+   <li>Implementarlos a mano (lo cual es altamente recomendable, ya que nos permitir&aacute; afinar al m&aacute;ximo el resultado)</li> 
+   <li>Utilizar las anotaciones <code>@EqualsAndHashcode</code> y <code>@ToString</code>, estableciendo en ambas la propiedad <code>callSuper = true</code>. De esta manera, a nivel interno, se utilizan los m&eacute;todos <code>equals</code>, <code>hashCode</code> y <code>toString</code> de la clase base en la implementaci&oacute;n de dichos m&eacute;todos en la clase hija.</li> 
+  </ul> </li> 
+</ul> 
+<p>Para m&aacute;s informaci&oacute;n se puede consultar el siguiente <a href="https://projectlombok.org/features/EqualsAndHashCode" rel="nofollow">enlace</a>.</p>
 </body>
 </html>
