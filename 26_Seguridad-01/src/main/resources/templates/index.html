@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>¡Bienvenido!</title>
 </head>
 <body>
 	<form th:action="@{/logout}" method="POST" id="logoutForm"></form>
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<a href="#" th:href="@{/admin/}">Zona de Administrador</a>
+	</div>
 	<h1>Bienvenido <span sec:authentication="name">Usuario</span></h1>
 	<a href="javascript:document.getElementById('logoutForm').submit()">Salir</a>
 </body>
