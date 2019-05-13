@@ -53,7 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.logout()
 				.logoutUrl("/logout")
-				.permitAll();
+				.permitAll()
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage("/acceso-denegado");
 		
 		// Añadimos esto para poder seguir accediendo a la consola de H2
 		// con Spring Security habilitado.

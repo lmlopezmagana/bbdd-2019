@@ -818,6 +818,29 @@ function setDocumentScrollTop(ypos)
 	}
 </pre>
 </div> 
+<h2> <a id="paso-4-modificaci&oacute;n-adicional-para-manejar-los-intentos-de-acceso-a-zonas-no-permitidas" class="anchor" href="#paso-4-modificaci%C3%B3n-adicional-para-manejar-los-intentos-de-acceso-a-zonas-no-permitidas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 4: Modificaci&oacute;n adicional para manejar los intentos de acceso a zonas no permitidas</h2> 
+<p>En el ejemplo anterior pod&iacute;amos ver como nos aparec&iacute;a una p&aacute;gina de error predefinida al intentar acceder a una url para la cual no tenemos privilegios, indicando error 403 <em>Forbbiden</em>. Si queremos modificar dicha p&aacute;gina de error por una plantilla definida por nosotros, lo podr&iacute;amos hacer de esta manera:</p> 
+<ol> 
+ <li>Modificamos el m&eacute;todo de configuraci&oacute;n, a&ntilde;adiendo:</li> 
+</ol> 
+<div class="highlight highlight-source-java">
+ <pre>			<span class="pl-c1">...</span>
+			.logout()
+				.logoutUrl(<span class="pl-s"><span class="pl-pds">&quot;</span>/logout<span class="pl-pds">&quot;</span></span>)
+				.permitAll()
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage(<span class="pl-s"><span class="pl-pds">&quot;</span>/acceso-denegado<span class="pl-pds">&quot;</span></span>);</pre>
+</div> 
+<ol start="2"> 
+ <li>Modificamos nuestra clase <code>MvcConfig</code>, para asignar dicha URL a una plantilla del mismo nombre</li> 
+</ol> 
+<div class="highlight highlight-source-java">
+ <pre>		registry<span class="pl-k">.</span>addViewController(<span class="pl-s"><span class="pl-pds">&quot;</span>/acceso-denegado<span class="pl-pds">&quot;</span></span>);</pre>
+</div> 
+<ol start="3"> 
+ <li>Creamos la plantilla con el dise&ntilde;o e informaci&oacute;n conveniente</li> 
+</ol> 
 <h2> <a id="paso-adicional-datos-de-prueba" class="anchor" href="#paso-adicional-datos-de-prueba" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso adicional: Datos de prueba</h2> 
 <p>Creamos a traves de un bean de tipo <code>CommandLineRunner</code> algunos datos de prueba para poder loguearnos. &iexcl;OJO! Hay que tener en cuenta antes de almacenar un usuario <strong>tenemos que codificar su contrase&ntilde;a</strong>.</p> 
 <div class="highlight highlight-source-java">

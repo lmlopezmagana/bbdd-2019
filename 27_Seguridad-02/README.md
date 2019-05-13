@@ -191,6 +191,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ```
 
+## Paso 4: Modificación adicional para manejar los intentos de acceso a zonas no permitidas
+
+En el ejemplo anterior podíamos ver como nos aparecía una página de error predefinida al intentar acceder a una url para la cual no tenemos privilegios, indicando error 403 _Forbbiden_. Si queremos modificar dicha página de error por una plantilla definida por nosotros, lo podríamos hacer de esta manera:
+
+1. Modificamos el método de configuración, añadiendo:
+
+```java
+			...
+			.logout()
+				.logoutUrl("/logout")
+				.permitAll()
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage("/acceso-denegado");
+```
+
+2. Modificamos nuestra clase `MvcConfig`, para asignar dicha URL a una plantilla del mismo nombre
+
+```java
+		registry.addViewController("/acceso-denegado");
+```
+
+3. Creamos la plantilla con el diseño e información conveniente
+
+
 ## Paso adicional: Datos de prueba
 
 Creamos a traves de un bean de tipo `CommandLineRunner` algunos datos de prueba para poder loguearnos. ¡OJO! Hay que tener en cuenta antes de almacenar un usuario **tenemos que codificar su contraseña**.
