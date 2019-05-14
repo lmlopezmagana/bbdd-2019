@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.salesianostriana.dam</groupId>
-	<artifactId>16_AsociacionOneToMany_v1</artifactId>
+	<artifactId>29_Consultas-01</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>16_AsociacionOneToMany_v1</name>
-	<description>Ejemplo de implementación de una asociación @OneToMany</description>
+	<name>29_Consultas-01</name>
+	<description>Ejemplo de uso de métodos de consulta</description>
 
 	<properties>
 		<java.version>1.8</java.version>
