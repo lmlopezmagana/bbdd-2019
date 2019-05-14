@@ -644,6 +644,243 @@ function setDocumentScrollTop(ypos)
 <ol> 
  <li>El modelo de seguridad tendr&aacute; herencia</li> 
  <li>En funci&oacute;n del tipo concreto de usuario, queremos redirigir a URLs diferentes. Para implementar esto &uacute;ltimo, nos basaremos en la soluci&oacute;n del siguiente <a href="http://websystique.com/spring-security/spring-security-4-role-based-login-example/" rel="nofollow">tutorial</a>.</li> 
-</ol>
+</ol> 
+<h2> <a id="paso-1-cambios-en-el-modelo-de-usuario" class="anchor" href="#paso-1-cambios-en-el-modelo-de-usuario" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1: Cambios en el modelo de usuario</h2> 
+<p>Introducimos dos cambios en el modelo de usuario:</p> 
+<ol> 
+ <li>Por un lado, utilizaremos herencia de tipo <em>Joined</em>. Nuestra clase base ser&aacute; abstracta.</li> 
+ <li>El usuario base implementar&aacute; el interfaz <code>UserDetails</code> (en el ejemplo anterior utilizamos otra estrategia, la de construir el objeto <code>UserDetails</code> a partir de <code>UserBuilder</code>). Esto nos obligar&aacute; a implmenetar todos los m&eacute;todos de la interfaz.</li> 
+</ol> 
+<p>La clase base, como decimos abstracta, quedar&iacute;a de la siguiente forma:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Data</span> <span class="pl-k">@NoArgsConstructor</span>
+<span class="pl-k">@Entity</span>
+<span class="pl-k">@Inheritance</span>(<span class="pl-c1">strategy</span> <span class="pl-k">=</span> <span class="pl-smi">InheritanceType</span><span class="pl-c1"><span class="pl-k">.</span>JOINED</span>)
+<span class="pl-k">public</span> <span class="pl-k">abstract</span> <span class="pl-k">class</span> <span class="pl-en">Usuario</span> <span class="pl-k">implements</span> <span class="pl-e">UserDetails</span> {
+	
+	<span class="pl-k">@Id</span> <span class="pl-k">@GeneratedValue</span>
+	<span class="pl-k">private</span> <span class="pl-k">long</span> id;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> nombre;
+	
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> apellidos;
+	
+	<span class="pl-k">@Column</span>(<span class="pl-c1">unique</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> email;
+
+	<span class="pl-k">private</span> <span class="pl-smi">String</span> password;
+	
+	<span class="pl-k">private</span> <span class="pl-k">boolean</span> cuentaCaducada;
+	<span class="pl-k">private</span> <span class="pl-k">boolean</span> cuentaBloqueada;
+	<span class="pl-k">private</span> <span class="pl-k">boolean</span> credencialesCaducadas;
+
+	<span class="pl-k">public</span> <span class="pl-en">Usuario</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">apellidos</span>, <span class="pl-smi">String</span> <span class="pl-v">email</span>, <span class="pl-smi">String</span> <span class="pl-v">password</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>nombre <span class="pl-k">=</span> nombre;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>apellidos <span class="pl-k">=</span> apellidos;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>email <span class="pl-k">=</span> email;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>password <span class="pl-k">=</span> password;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>cuentaCaducada <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>cuentaBloqueada <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+		<span class="pl-c1">this</span><span class="pl-k">.</span>credencialesCaducadas <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+	}
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">abstract</span> <span class="pl-k">Collection&lt;? extends <span class="pl-smi">GrantedAuthority</span>&gt;</span> <span class="pl-en">getAuthorities</span>();
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-smi">String</span> <span class="pl-en">getUsername</span>() {
+		<span class="pl-k">return</span> email;
+	}
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">isAccountNonExpired</span>() {
+		<span class="pl-k">return</span> <span class="pl-k">!</span>cuentaCaducada;
+	}
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">isAccountNonLocked</span>() {
+		<span class="pl-k">return</span> <span class="pl-k">!</span>cuentaBloqueada;
+	}
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">isCredentialsNonExpired</span>() {
+		<span class="pl-k">return</span> <span class="pl-k">!</span>credencialesCaducadas;
+	}
+
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">boolean</span> <span class="pl-en">isEnabled</span>() {
+		<span class="pl-k">return</span> <span class="pl-k">!</span>cuentaBloqueada;
+	}
+	
+}</pre>
+</div> 
+<p>El interfaz <code>UserDetails</code> nos obliga a implementar una serie de m&eacute;todos que indican si la cuenta de usuario no est&aacute; bloqueada, est&aacute; habilitado o sus credenciales no han expirado.</p> 
+<p>A partir de aqu&iacute;, extendemos dicha clase en otras dos, <code>Empleado</code> y <code>Cliente</code>. En cada una de ellas implementamos el m&eacute;todo abstracto de <code>Usuario</code>, que indica el rol o roles que tendr&aacute; cada clase.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Getter</span> <span class="pl-k">@Setter</span>
+<span class="pl-k">@EqualsAndHashCode</span>(<span class="pl-c1">callSuper</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+<span class="pl-k">@ToString</span>(<span class="pl-c1">callSuper</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+<span class="pl-k">@NoArgsConstructor</span>
+<span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Empleado</span> <span class="pl-k">extends</span> <span class="pl-e">Usuario</span>{
+	
+	<span class="pl-k">private</span> <span class="pl-smi">LocalDate</span> fechaAltaSS;
+
+	<span class="pl-k">public</span> <span class="pl-en">Empleado</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">apellidos</span>, <span class="pl-smi">String</span> <span class="pl-v">email</span>, <span class="pl-smi">String</span> <span class="pl-v">password</span>, 
+			<span class="pl-smi">LocalDate</span> <span class="pl-v">fechaAltaSS</span>) {
+		<span class="pl-c1">super</span>(nombre, apellidos, email, password);
+		<span class="pl-c1">this</span><span class="pl-k">.</span>fechaAltaSS <span class="pl-k">=</span> fechaAltaSS;
+	}
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">Collection&lt;? extends <span class="pl-smi">GrantedAuthority</span>&gt;</span> <span class="pl-en">getAuthorities</span>() {
+		<span class="pl-k">return</span> <span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-k">new</span> <span class="pl-smi">SimpleGrantedAuthority</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>ROLE_ADMIN<span class="pl-pds">&quot;</span></span>));
+	}
+
+}
+</pre>
+</div> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Getter</span> <span class="pl-k">@Setter</span>
+<span class="pl-k">@EqualsAndHashCode</span>(<span class="pl-c1">callSuper</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+<span class="pl-k">@ToString</span>(<span class="pl-c1">callSuper</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+<span class="pl-k">@NoArgsConstructor</span>
+<span class="pl-k">@Entity</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Cliente</span> <span class="pl-k">extends</span> <span class="pl-e">Usuario</span> {
+	
+	<span class="pl-k">private</span> <span class="pl-smi">LocalDate</span> fechaNacimiento;
+
+	<span class="pl-k">public</span> <span class="pl-en">Cliente</span>(<span class="pl-smi">String</span> <span class="pl-v">nombre</span>, <span class="pl-smi">String</span> <span class="pl-v">apellidos</span>, <span class="pl-smi">String</span> <span class="pl-v">email</span>, <span class="pl-smi">String</span> <span class="pl-v">password</span>, 
+			<span class="pl-smi">LocalDate</span> <span class="pl-v">fechaNacimiento</span>) {
+		<span class="pl-c1">super</span>(nombre, apellidos, email, password);
+		<span class="pl-c1">this</span><span class="pl-k">.</span>fechaNacimiento <span class="pl-k">=</span> fechaNacimiento;
+	}
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-k">Collection&lt;? extends <span class="pl-smi">GrantedAuthority</span>&gt;</span> <span class="pl-en">getAuthorities</span>() {
+		<span class="pl-k">return</span> <span class="pl-smi">Arrays</span><span class="pl-k">.</span>asList(<span class="pl-k">new</span> <span class="pl-smi">SimpleGrantedAuthority</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>ROLE_USER<span class="pl-pds">&quot;</span></span>));
+	}
+	
+}
+</pre>
+</div> 
+<h3> <a id="paso-11-servicios-y-repositorios" class="anchor" href="#paso-11-servicios-y-repositorios" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 1.1 Servicios y repositorios</h3> 
+<p>En principio, no necesitamos crear para este ejemplo ni repositorios ni servicios de <code>Cliente</code> o <code>Empleado</code>, ya que podemos gestionar las inserciones o selecciones a trav&eacute;s del servicio de <code>Usuario</code>. Si tuvi&eacute;ramos relaciones m&aacute;s complejas con otro tipo de entidades, posiblemente sea necesario crearlos.</p> 
+<h2> <a id="paso-2-cambios-en-nuestro-servicio-userdetailsservice" class="anchor" href="#paso-2-cambios-en-nuestro-servicio-userdetailsservice" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 2. Cambios en nuestro servicio <code>UserDetailsService</code> </h2> 
+<p>Dado que en este ejemplo nuestra clase <code>Usuario</code> implementa la interfaz <code>UserDetailsService</code>, tenemos que cambiar la logica de nuestro servicio <code>UserDetailsServiceImpl</code>, para que deje de utilizar <code>UserBuilder</code>. El c&oacute;digo queda bastante simplificado.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Service</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>userDetailsService<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UserDetailsServiceImpl</span> <span class="pl-k">implements</span> <span class="pl-e">UserDetailsService</span> {
+
+	<span class="pl-smi">UsuarioServicio</span> usuarioServicio;
+	
+	<span class="pl-k">public</span> <span class="pl-en">UserDetailsServiceImpl</span>(<span class="pl-smi">UsuarioServicio</span> <span class="pl-v">servicio</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>usuarioServicio <span class="pl-k">=</span> servicio;
+	}
+	
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">public</span> <span class="pl-smi">UserDetails</span> <span class="pl-en">loadUserByUsername</span>(<span class="pl-smi">String</span> <span class="pl-v">username</span>) <span class="pl-k">throws</span> <span class="pl-smi">UsernameNotFoundException</span> {
+		
+		<span class="pl-smi">Usuario</span> usuario <span class="pl-k">=</span> usuarioServicio<span class="pl-k">.</span>buscarPorEmail(username);
+		
+		<span class="pl-k">if</span> (usuario <span class="pl-k">==</span> <span class="pl-c1">null</span>) {
+			<span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-smi">UsernameNotFoundException</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>Usuario no encontrado<span class="pl-pds">&quot;</span></span>);
+		} 
+		
+		<span class="pl-k">return</span> usuario;
+				
+	}
+
+}
+</pre>
+</div> 
+<h2> <a id="paso-3-cambios-en-la-seguridad" class="anchor" href="#paso-3-cambios-en-la-seguridad" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paso 3. Cambios en la seguridad</h2> 
+<p>En el ejemplo anterior, ten&iacute;amos el siguiente c&oacute;digo en la clase <code>SecurityConfig</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre>	.formLogin()
+		.loginPage(<span class="pl-s"><span class="pl-pds">&quot;</span>/login<span class="pl-pds">&quot;</span></span>)
+		.permitAll()
+		.and()</pre>
+</div> 
+<p>Con este fragmento de c&oacute;digo, le estamos indicando al sistema que si el login se produce con &eacute;xito, nos redirija a la p&aacute;gina desde la cual se nos redirigi&oacute; previamente al login, o en su defecto, a la raiz.</p> 
+<p>En este caso, <strong>queremos tener redirecciones diferentes para roles diferentes</strong>: el empleado, una vez logueado con &eacute;xito, acceder&aacute; a la parte de administraci&oacute;n, y el cliente, a la zona de clientes. &iquest;C&oacute;mo podemos conseguirlo? A la hora de configurar el formulario de login estamos usando (casi sin saberlo) una instancia de la clase <code>FormLoginConfigurer</code>, y uno de sus m&eacute;todos (heredado de otra clase) es <code>successHandler</code>. Este m&eacute;todo nos permite, en lugar de indicar una url de <em>&eacute;xito</em>, establecer dicha url a traves de un manejador. Dicho manejador debe ser una instancia de una clase que implemente la interfaz <code>AuthenticationSuccessHandler</code>. En lugar de implementar directamente la interfaz, podemos extender una clase, llamada <code>SimpleUrlAuthenticationSuccessHandler</code>, que ya implementa esa interfaz, y nos proporciona la funcionalidad b&aacute;sica de redirigir a una URL.</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Component</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">CustomSuccessHandler</span> <span class="pl-k">extends</span> <span class="pl-e">SimpleUrlAuthenticationSuccessHandler</span> {
+
+	<span class="pl-k">private</span> <span class="pl-smi">RedirectStrategy</span> redirectStrategy <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">DefaultRedirectStrategy</span>();
+
+	<span class="pl-k">@Override</span>
+	<span class="pl-k">protected</span> <span class="pl-k">void</span> <span class="pl-en">handle</span>(<span class="pl-smi">HttpServletRequest</span> <span class="pl-v">request</span>, <span class="pl-smi">HttpServletResponse</span> <span class="pl-v">response</span>, <span class="pl-smi">Authentication</span> <span class="pl-v">authentication</span>)
+			<span class="pl-k">throws</span> <span class="pl-smi">IOException</span> {
+		<span class="pl-smi">String</span> targetUrl <span class="pl-k">=</span> determineTargetUrl(authentication);
+
+		<span class="pl-k">if</span> (response<span class="pl-k">.</span>isCommitted()) {
+			<span class="pl-smi">System</span><span class="pl-k">.</span>out<span class="pl-k">.</span>println(<span class="pl-s"><span class="pl-pds">&quot;</span>Can't redirect<span class="pl-pds">&quot;</span></span>);
+			<span class="pl-k">return</span>;
+		}
+
+		redirectStrategy<span class="pl-k">.</span>sendRedirect(request, response, targetUrl);
+	}
+
+	<span class="pl-c"><span class="pl-c">/*</span></span>
+<span class="pl-c">	 * This method extracts the roles of currently logged-in user and returns</span>
+<span class="pl-c">	 * appropriate URL according to his/her role.</span>
+<span class="pl-c">	 <span class="pl-c">*/</span></span>
+	<span class="pl-k">protected</span> <span class="pl-smi">String</span> <span class="pl-en">determineTargetUrl</span>(<span class="pl-smi">Authentication</span> <span class="pl-v">authentication</span>) {
+		<span class="pl-smi">String</span> url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-pds">&quot;</span></span>;
+
+		<span class="pl-k">Collection&lt;? extends <span class="pl-smi">GrantedAuthority</span>&gt;</span> authorities <span class="pl-k">=</span> authentication<span class="pl-k">.</span>getAuthorities();
+
+		<span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> roles <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-smi">String</span>&gt;</span>();
+
+		<span class="pl-k">for</span> (<span class="pl-smi">GrantedAuthority</span> a <span class="pl-k">:</span> authorities) {
+			roles<span class="pl-k">.</span>add(a<span class="pl-k">.</span>getAuthority());
+		}
+
+		<span class="pl-k">if</span> (isAdmin(roles)) {
+			url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>/admin/<span class="pl-pds">&quot;</span></span>;
+		} <span class="pl-k">else</span> <span class="pl-k">if</span> (isUser(roles)) {
+			url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>/<span class="pl-pds">&quot;</span></span>;
+		} <span class="pl-k">else</span> {
+			url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">&quot;</span>/acceso-denegado<span class="pl-pds">&quot;</span></span>;
+		}
+
+		<span class="pl-k">return</span> url;
+	}
+
+	<span class="pl-k">private</span> <span class="pl-k">boolean</span> <span class="pl-en">isUser</span>(<span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> <span class="pl-v">roles</span>) {
+		<span class="pl-k">if</span> (roles<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">&quot;</span>ROLE_USER<span class="pl-pds">&quot;</span></span>)) {
+			<span class="pl-k">return</span> <span class="pl-c1">true</span>;
+		}
+		<span class="pl-k">return</span> <span class="pl-c1">false</span>;
+	}
+
+	<span class="pl-k">private</span> <span class="pl-k">boolean</span> <span class="pl-en">isAdmin</span>(<span class="pl-k">List&lt;<span class="pl-smi">String</span>&gt;</span> <span class="pl-v">roles</span>) {
+		<span class="pl-k">if</span> (roles<span class="pl-k">.</span>contains(<span class="pl-s"><span class="pl-pds">&quot;</span>ROLE_ADMIN<span class="pl-pds">&quot;</span></span>)) {
+			<span class="pl-k">return</span> <span class="pl-c1">true</span>;
+		}
+		<span class="pl-k">return</span> <span class="pl-c1">false</span>;
+	}
+
+	<span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">setRedirectStrategy</span>(<span class="pl-smi">RedirectStrategy</span> <span class="pl-v">redirectStrategy</span>) {
+		<span class="pl-c1">this</span><span class="pl-k">.</span>redirectStrategy <span class="pl-k">=</span> redirectStrategy;
+	}
+
+	<span class="pl-k">protected</span> <span class="pl-smi">RedirectStrategy</span> <span class="pl-en">getRedirectStrategy</span>() {
+		<span class="pl-k">return</span> redirectStrategy;
+	}
+
+}
+
+</pre>
+</div> 
+<p>La sistem&aacute;tica de esta clase no es complicada: una vez que el usuario se ha logueado correctamente, lo redirigimos a una URL; dicha URL se determina en funci&oacute;n del rol del usuario (el usuario se nos presenta aqu&iacute; a trav&eacute;s de un objeto de tipo <code>Authentication</code>, que ya nombramos en el ejemplo anterior).</p>
 </body>
 </html>
