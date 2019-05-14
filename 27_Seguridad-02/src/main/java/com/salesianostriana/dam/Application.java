@@ -22,12 +22,13 @@ public class Application {
 			
 			Usuario u = new Usuario();
 			u.setAdmin(false);
-			u.setNombre("Luis Miguel");
-			u.setApellidos("López");
+			u.setNombre("Luismi");
+			u.setApellidos("Lopez");
 			u.setEmail("luismi.lopez@email.com");
 			u.setPassword(passwordEncoder.encode("1234"));
 			
 			servicio.save(u);
+
 			
 			
 			Usuario a = new Usuario();
@@ -38,7 +39,6 @@ public class Application {
 			a.setPassword(passwordEncoder.encode("1234"));
 			
 			servicio.save(a);
-			
 		};
 	}
 	
