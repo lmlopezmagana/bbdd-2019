@@ -1,0 +1,790 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>/home/luismi/Documentos/repos/bbdd-2019/30_Consultas-2/.README.md.html</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<h1> <a id="ejemplo-30---consultas-con-spring-data-jpa-jpql" class="anchor" href="#ejemplo-30---consultas-con-spring-data-jpa-jpql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo 30 - Consultas con Spring Data JPA: JPQL</h1> 
+<h2> <a id="modelo-de-datos" class="anchor" href="#modelo-de-datos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Modelo de datos</h2> 
+<p>Partimos de un modelo de datos como el del ejemplo anterior</p> 
+<p><a href="./uml.jpg" target="_blank" rel="noopener noreferrer"><img src="./uml.jpg" alt="Diagrama" style="max-width:100%;" /></a></p> 
+<h2> <a id="jpql" class="anchor" href="#jpql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>JPQL</h2> 
+<p>Al igual que los sistemas gestores de bases de datos relacionales tienen SQL como lenguaje de consulta, JPA tiene su propio lenguaje de consulta, llamado JPQL.</p> 
+<p>JPQL es usado para hacer consultas contra las entidades almacenadas en una base de datos relacional. Est&aacute; inspirado en gran medida por SQL, y sus consultas se asemejan a las consultas SQL en la sintaxis, pero opera con objetos entidad de JPA en lugar de hacerlo directamente con las tablas de la base de datos.</p> 
+<p>Adem&aacute;s de recuperar objetos (consultas <code>SELECT</code>), JPQL soporta consultas de actualizaci&oacute;n (<code>UPDATE</code>) y borrado (<code>DELETE</code>).</p> 
+<p>JPQL est&aacute; basado en Hibernate Query Language (HQL), un lenguaje de consulta anterior no est&aacute;ndar incluido en la biblioteca de mapeo objeto-relacional Hibernate.</p> 
+<p>Hibernate y HQL se crearon antes de la especificaci&oacute;n JPA. Hasta la versi&oacute;n Hibernate 3, JPQL es un subconjunto de HQL.</p> 
+<h2> <a id="sint&aacute;xis-de-jpql" class="anchor" href="#sint%C3%A1xis-de-jpql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sint&aacute;xis de JPQL</h2> 
+<p>En este <a href="https://www.objectdb.com/java/jpa/query/jpql/structure" rel="nofollow">enlace</a> podemos encontrar un amplio tutorial sobre la sintaxis que podemos utilizar en JPQL. Dejamos por aqu&iacute; un peque&ntilde;o resumen.</p> 
+<p>Una sentencia JPQL tiene la siguiente sintaxis:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> ... <span class="pl-k">FROM</span> ...
+[<span class="pl-k">WHERE</span> ...]
+[<span class="pl-k">GROUP BY</span> ... [<span class="pl-k">HAVING</span> ...]]
+[<span class="pl-k">ORDER BY</span> ...]</pre>
+</div> 
+<p>Son obligatorias las dos primeras cl&aacute;usulas. El resto, son optativas.</p> 
+<p>Para sentencias <code>UPDATE</code> y <code>DELETE</code> es m&aacute;s sencillo:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">DELETE</span> <span class="pl-k">FROM</span> ... [<span class="pl-k">WHERE</span> ...]
+
+<span class="pl-k">UPDATE</span> ... <span class="pl-k">SET</span> ... [<span class="pl-k">WHERE</span> ...]</pre>
+</div> 
+<p>Aparte de tan solo unas peque&ntilde;as excepciones, JPQL no es sensible al uso de may&uacute;sculas/min&uacute;sculas.</p> 
+<h3> <a id="cla&uacute;sula-select" class="anchor" href="#cla%C3%BAsula-select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cla&uacute;sula <code>SELECT</code> </h3> 
+<h4> <a id="sentencia-select-m&iacute;nima" class="anchor" href="#sentencia-select-m%C3%ADnima" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sentencia <code>SELECT</code> m&iacute;nima</h4> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> c <span class="pl-k">FROM</span> Country c</pre>
+</div> 
+<h4> <a id="uso-de-distinct" class="anchor" href="#uso-de-distinct" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso de <code>DISTINCT</code> </h4> 
+<p>El uso de <code>DISTINCT</code> tiene el mismo efecto que en SQL.</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT DISTINCT</span> c <span class="pl-k">FROM</span> Country c <span class="pl-k">WHERE</span> <span class="pl-c1">c</span>.<span class="pl-c1">name</span> <span class="pl-k">LIKE</span> <span class="pl-s"><span class="pl-pds">'</span>I%<span class="pl-pds">'</span></span></pre>
+</div> 
+<h3> <a id="cla&uacute;sula-from" class="anchor" href="#cla%C3%BAsula-from" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cla&uacute;sula <code>FROM</code> </h3> 
+<p>En la cla&uacute;sula <code>FROM</code> identificamos las entidades sobre las que vamos a realizar la consulta. Podemos incluir m&aacute;s de una entidad separando por comas</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> c1, c2 <span class="pl-k">FROM</span> Country c1, Country c2
+<span class="pl-k">WHERE</span> c2 MEMBER OF <span class="pl-c1">c1</span>.<span class="pl-c1">neighbors</span></pre>
+</div> 
+<h4> <a id="tipos-de-join-inner-join-outer-joiny-join-fetch" class="anchor" href="#tipos-de-join-inner-join-outer-joiny-join-fetch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tipos de <code>JOIN</code>: <code>INNER JOIN</code>, <code>OUTER JOIN</code>y <em><code>JOIN FETCH</code></em> </h4> 
+<p>Al igual que SQL, JPQL dispone la posibilidad de realizar la <em>reuni&oacute;n</em> de m&aacute;s de una tabla. Si se quiere conocer las operaciones de JOIN normal o lateral se puede visitar la bibliograf&iacute;a. Explicamos aqu&iacute; una opci&oacute;n interesante que es <code>JOIN FETCH</code></p> 
+<p>JPA nos ofrece una navegaci&oacute;n transparente entre objetos, lo cual nos ofrece la ilusi&oacute;n de que tenemos todas las instancias de las diferentes entidades en memoria para navegar entre ellas. Sin embargo, esto no es del todo real, y si lo llegamos a implementar con asociaciones cuyo tipo de <em>fetching</em> sea siempre <em>EAGER</em>, el rendimiento bajar&aacute; disparado.</p> 
+<p>Supongamos que tenemos una entidad <code>Country</code>, asociada con otra entidad <code>Capital</code>. Si queremos, expl&iacute;citamente, obtener la capital del pa&iacute;s, a la vez que obtenemos el pa&iacute;s, podemos hacer un <code>JOIN FECTH</code>.</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> c <span class="pl-k">FROM</span> Country c <span class="pl-k">JOIN</span> FETCH <span class="pl-c1">c</span>.<span class="pl-c1">capital</span></pre>
+</div> 
+<p><code>JOIN FETCH</code> tiene como &uacute;nico prop&oacute;sito <em>recuperar objetos asociados</em> en una misma consulta. Si lo implementamos as&iacute;, ganaremos en eficiencia.</p> 
+<h3> <a id="cla&uacute;sula-where" class="anchor" href="#cla%C3%BAsula-where" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cla&uacute;sula <code>WHERE</code> </h3> 
+<p>Sirve para establecer condiciones que deben cumplir las entidades para ser obtenidas como resultado de la consulta. Esta cl&aacute;usula espera un predicado. Su sintaxis es muy similar a la de SQL.</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> c <span class="pl-k">FROM</span> Country c <span class="pl-k">WHERE</span> <span class="pl-c1">c</span>.<span class="pl-c1">population</span> <span class="pl-k">&gt;</span> <span class="pl-c1">50000000</span></pre>
+</div> 
+<p>Las posibilidades de esta cla&uacute;sula son muy grandes. Para m&aacute;s informaci&oacute;n puedes consultar <a href="https://www.objectdb.com/java/jpa/query/jpql/expression" rel="nofollow">aqu&iacute;</a>.</p> 
+<h3> <a id="polimorfismo-y-downcasting" class="anchor" href="#polimorfismo-y-downcasting" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Polimorfismo y <em>downcasting</em> </h3> 
+<p>En este apartado usamos el esquema del <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/25_Herencia_Joined">ejemplo 25</a></p> 
+<blockquote> 
+ <p>La expresi&oacute;n <em>downcasting</em> o <em>refinado de tipo</em> significa realizar un <em>casting</em> de una referencia de una clase base a una de sus clases derivadas</p> 
+</blockquote> 
+<p>Cuando utilizamos un esquema de herencia que soporta consultas polim&oacute;rficas, nuestras sentencias <code>SELECT</code> tomar&aacute;n todas las instancias de la clase base, as&iacute; como de las subclases.</p> 
+<p>La siguiente consulta</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> c <span class="pl-k">FROM</span> Cliente c</pre>
+</div> 
+<p>nos devolver&iacute;a todas las instancias de <code>Cliente</code>, as&iacute; como sus subclases.</p> 
+<p>Desde JPA 2 se puede utilizar el operador <code>TYPE</code>, que nos permite filtrar por el tipo de una entidad.</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">select</span> c <span class="pl-k">from</span> Cliente c <span class="pl-k">where</span> TYPE(c) <span class="pl-k">=</span> Cliente</pre>
+</div> 
+<p>Esta consulta solo nos devolver&iacute;a las instancias del tipo base.</p> 
+<h2> <a id="uso-de-jpql-al-estilo-jpa" class="anchor" href="#uso-de-jpql-al-estilo-jpa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso de JPQL <em>al estilo JPA</em> </h2> 
+<p>Podemos utilizar consultas JPQL de dos formas diferentes:</p> 
+<ol> 
+ <li>Lanzando la consulta a trav&eacute;s de un objeto <code>javax.persistence.Query</code> o <code>javax.persistence.TypedQuery&lt;T&gt;</code>. La utilizaci&oacute;n de esta clase la har&iacute;amos directamente en un servicio. A este lo llamamos <em>estilo JPA</em>.</li> 
+ <li>Utilizando la anotaci&oacute;n <code>@Query</code> sobre un m&eacute;todo de un repositorio. A este lo llamamos el <em>estilo Spring Data JPA</em>.</li> 
+</ol> 
+<p>En este apartado vamos a conocer el primero de ellos.</p> 
+<p>Si revisitamos el <a href="https://github.com/lmlopezmagana/bbdd-2019/tree/master/24_Herencia_SingleTable">ejemplo 24</a>, podemos encontrar un ejemplo de uso de JPQL con <code>TypedQuery</code>:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Service</span>
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">UsuarioServicio</span> {
+
+	<span class="pl-k">@Autowired</span>
+	<span class="pl-smi">EntityManager</span> entityManager;
+
+	<span class="pl-c"><span class="pl-c">//</span> Resto del c&oacute;digo</span>
+
+	<span class="pl-k">public</span> <span class="pl-k">List&lt;<span class="pl-smi">Usuario</span>&gt;</span> <span class="pl-en">findThemAll</span>() {
+
+		<span class="pl-k">List&lt;<span class="pl-smi">Usuario</span>&gt;</span> result <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+
+		<span class="pl-k">TypedQuery&lt;<span class="pl-smi">Usuario</span>&gt;</span> query <span class="pl-k">=</span> entityManager<span class="pl-k">.</span>createQuery(<span class="pl-s"><span class="pl-pds">&quot;</span>select u from Usuario u<span class="pl-pds">&quot;</span></span>, <span class="pl-smi">Usuario</span><span class="pl-k">.</span>class);
+
+		<span class="pl-k">try</span> {
+			result <span class="pl-k">=</span> query<span class="pl-k">.</span>getResultList();
+		} <span class="pl-k">catch</span> (<span class="pl-smi">NoResultException</span> e) {
+			result <span class="pl-k">=</span> <span class="pl-c1">null</span>;
+		}
+
+		<span class="pl-k">return</span> result;
+	}
+
+}
+</pre>
+</div> 
+<p>Podemos observar los siguientes aspectos:</p> 
+<ol> 
+ <li>Necesitamos una instancia de <code>EntityManager</code> para poder crear la consulta. Este objeto especial es nuestro <a href="https://javaee.github.io/javaee-spec/javadocs/javax/persistence/EntityManager.html" rel="nofollow"><strong>contexto de persistencia</strong></a>.</li> 
+ <li>Al crear la consulta, indicamos el tipo de dato que nos va a devolver a trav&eacute;s del segundo m&eacute;todo de <code>createQuery</code>. Dicho tipo debe coincidir con el tipo de dato resultado del <code>TypedQuery</code> creado.</li> 
+</ol> 
+<h2> <a id="uso-de-jpql-al-estilo-spring-data-jpa" class="anchor" href="#uso-de-jpql-al-estilo-spring-data-jpa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso de JPQL <em>al estilo Spring Data JPA</em> </h2> 
+<p>Spring Data JPA nos ofrece, entre otras facilidades, la posibilidad de utilizar la anotaci&oacute;n <code>@Query</code>, que funciona de la siguiente forma:</p> 
+<ol> 
+ <li>Definimos un m&eacute;todo en uno de nuestros repositorios.</li> 
+ <li>Anotamos dicho m&eacute;todo con <code>@Query</code> </li> 
+ <li>Dentro de la anotaci&oacute;n, indicamos la consulta JPQL.</li> 
+</ol> 
+<p>Un ejemplo podr&iacute;a ser el siguiente:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Query</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>select a from Alumno a where a.curso is null<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">List&lt;<span class="pl-smi">Alumno</span>&gt;</span> encuentraAlumnoSinCurso();</pre>
+</div> 
+<h3> <a id="uso-de-par&aacute;metros-en-las-consultas" class="anchor" href="#uso-de-par%C3%A1metros-en-las-consultas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uso de par&aacute;metros en las consultas</h3> 
+<p>Al igual que en el ejemplo anterior, podemos utilizar variables como par&aacute;metros en las consultas (por ejemplo, esto nos servir&iacute;a para implementar un buscador). Para ello debemos:</p> 
+<ol> 
+ <li>Escribir una consulta JPQL que tenga condiciones en la cl&aacute;usula <code>WHERE</code>.</li> 
+ <li>A cada par&aacute;metro, le daremos un nombre, que tendr&aacute; como prefijo el caracter dos puntos <code>:</code>.</li> 
+ <li>El m&eacute;todo que tenga la anotaci&oacute;n <code>@Query</code> con la consulta recibir&aacute; tantos argumentos como hayamos definido en la consulta. Para hacer la asignaci&oacute;n de cada par&aacute;metro en la consulta con los argumentos del m&eacute;todo, utilizamos la anotaci&oacute;n <code>@Param</code>.</li> 
+</ol> 
+<blockquote> 
+ <p>La anotaci&oacute;n <code>@Param</code> no es necesaria si el <em>token</em> utilizado para definir el argumento en la consulta coincide con el nombre del par&aacute;metro que recibe el m&eacute;todo.</p> 
+</blockquote> 
+<p>Un ejemplo podr&iacute;a ser este:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">@Query</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>select a from Alumno a where fecha_nacimiento &gt;= :fechaNacimiento and a.curso = :curso<span class="pl-pds">&quot;</span></span>)
+<span class="pl-k">public</span> <span class="pl-k">List&lt;<span class="pl-smi">Alumno</span>&gt;</span> alumnosNacidosDespuesDe(<span class="pl-k">@Param</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>fechaNacimiento<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">LocalDate</span> fechaNacimiento, <span class="pl-k">@Param</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>curso<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">Curso</span> curso);</pre>
+</div> 
+<h2> <a id="bibliograf&iacute;a" class="anchor" href="#bibliograf%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bibliograf&iacute;a</h2> 
+<ul> 
+ <li><a href="https://es.wikipedia.org/wiki/Java_Persistence_Query_Language" rel="nofollow">https://es.wikipedia.org/wiki/Java_Persistence_Query_Language</a></li> 
+ <li><a href="https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-with-the-query-annotation/" rel="nofollow">https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-with-the-query-annotation/</a></li> 
+ <li><a href="https://www.objectdb.com/java/jpa/query/jpql/structure" rel="nofollow">https://www.objectdb.com/java/jpa/query/jpql/structure</a></li> 
+ <li><a href="https://thoughts-on-java.org/jpql/" rel="nofollow">https://thoughts-on-java.org/jpql/</a></li> 
+</ul>
+</body>
+</html>

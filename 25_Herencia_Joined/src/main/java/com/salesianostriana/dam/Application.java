@@ -40,6 +40,9 @@ public class Application {
 			
 			clienteVipServicio.vipsPorFecha(LocalDate.now().minusDays(1), LocalDate.now()).forEach(System.out::println);
 
+			
+			
+			
 		};
 	}
 

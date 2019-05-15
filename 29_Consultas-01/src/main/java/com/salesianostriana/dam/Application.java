@@ -32,7 +32,9 @@ public class Application {
 			
 			System.out.println("5 alumnos apellidados Molina, ordenados por fecha de nacimiento");
 			System.out.println("===================================");
-			alumnoServicio.cincoPorApellido("Molina").forEach(System.out::println);
+			alumnoServicio.cincoPorApellido("Molina").forEach(a -> {
+				System.out.println(a.getNombre() + " " + a.getApellido1());
+			});
 			
 			
 			System.out.println("3 alumnos cuyo primero o segundo apellido es Gomez");

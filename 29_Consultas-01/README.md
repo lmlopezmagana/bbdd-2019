@@ -174,7 +174,20 @@ public class AlumnoServicio extends BaseService<Alumno, Long, AlumnoRepository>{
 
 > Es habitual necesitar la anotación `@Transactional` cuando utilicemos `Stream<T>` como tipo de retorno de una consulta.
 
+## ¿Cuándo usar esta estrategia de consultas?
 
+Esta estrategia de generación de consultas tiene los siguientes beneficios:
+
+- Crear consultas simples es rápido.
+- El nombre del método de nuestro método de consulta describe los valores seleccionados y las condiciones de búsqueda utilizadas.
+
+Esta estrategia de generación de consultas tiene las siguientes debilidades:
+
+- Las características del analizador de nombres de métodos determinan qué tipo de consultas podemos crear. Si el analizador de nombres de métodos no admite la palabra clave requerida, no podemos usar esta estrategia.
+- Los nombres de los métodos de los métodos de consulta complejos son largos y feos.
+- No hay soporte para consultas dinámicas.
+
+El autor _Petri Kainulainen_ da como pista que si el nombre del método es tan largo que cuesta trabajo comprenderlo, mejor no utilizar esta estrategia.
 ## Bibliografía
 
 - [https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-from-method-names/](https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-from-method-names/) 
