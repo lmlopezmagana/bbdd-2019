@@ -1,0 +1,798 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>/home/luismi/Documentos/repos/bbdd-2019/31_Paginacion/.README.md.html</title>
+
+
+<style type="text/css">
+body {
+	color: #333;
+	font: 13px/1.4 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	background: transparent;
+	color: #4183c4;
+	text-decoration: none;
+}
+
+a:active,
+a:hover {
+	outline: 0 none;
+	text-decoration: underline;
+}
+
+abbr[title] {
+	border-bottom: 1px dotted;
+}
+
+b,
+strong {
+	font-weight: bold;
+}
+
+dfn {
+	font-style: italic;
+}
+h1 {
+	font-size: 2em;
+	margin: 0.67em 0;
+}
+mark {
+	background: #ff0;
+	color: #000;
+}
+small {
+	font-size: 80%;
+}
+sub, sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sup {
+	top: -0.5em;
+}
+sub {
+	bottom: -0.25em;
+}
+img {
+	border: 0 none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+figure {
+	margin: 1em 40px;
+}
+hr {
+	box-sizing: content-box;
+	height: 0;
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: monospace,monospace;
+	font-size: 1em;
+}
+
+pre {
+	overflow: auto;
+	font: 12px Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.markdown-body {
+	padding: 30px;
+	font-size: 16px;
+	line-height: 1.6;
+	word-wrap: break-word;
+}
+
+.markdown-body>*:first-child {
+	margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+	margin-bottom: 0 !important;
+}
+
+.markdown-body .absent {
+	color: #c00;
+}
+
+.markdown-body .anchor {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	padding-right: 6px;
+	padding-left: 30px;
+	margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+	outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+	position: relative;
+	margin-top: 1em;
+	margin-bottom: 16px;
+	font-weight: bold;
+	line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+	display: none;
+	color: #000;
+	vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+	padding-left: 8px;
+	margin-left: -30px;
+	line-height: 1;
+	text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+	display: inline-block;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+	font-size: inherit;
+}
+
+.markdown-body h1 {
+	padding-bottom: 0.3em;
+	font-size: 2.25em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+	padding-bottom: 0.3em;
+	font-size: 1.75em;
+	line-height: 1.225;
+	border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+	font-size: 1.5em;
+	line-height: 1.43;
+}
+
+.markdown-body h4 {
+	font-size: 1.25em;
+}
+
+.markdown-body h5 {
+	font-size: 1em;
+}
+
+.markdown-body h6 {
+	font-size: 1em;
+	color: #777;
+}
+
+.markdown-body p,.markdown-body blockquote,
+.markdown-body ul,.markdown-body ol,
+.markdown-body dl,.markdown-body table,
+.markdown-body pre {
+	margin-top: 0;
+	margin-bottom: 16px;
+}
+
+.markdown-body hr {
+	height: 4px;
+	padding: 0;
+	margin: 16px 0;
+	background-color: #e7e7e7;
+	border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+	padding-left: 2em;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+	padding: 0;
+	list-style-type: none;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.markdown-body li>p {
+	margin-top: 16px;
+}
+
+.markdown-body dl {
+	padding: 0;
+}
+
+.markdown-body dl dt {
+	padding: 0;
+	margin-top: 16px;
+	font-size: 1em;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.markdown-body dl dd {
+	padding: 0 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+	padding: 0 15px;
+	color: #777;
+	border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+	margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+	margin-bottom: 0;
+}
+
+.markdown-body table {
+	display: block;
+	width: 100%;
+	overflow: auto;
+	word-break: normal;
+	word-break: keep-all;
+}
+
+.markdown-body table th {
+	font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+	padding: 6px 13px;
+	border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.markdown-body img {
+	max-width: 100%;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.markdown-body span.frame {
+	display: block;
+	overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+	display: block;
+	float: left;
+	width: auto;
+	padding: 7px;
+	margin: 13px 0 0;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+.markdown-body span.frame span img {
+	display: block;
+	float: left;
+}
+
+.markdown-body span.frame span span {
+	display: block;
+	padding: 5px 0 0;
+	clear: both;
+	color: #333;
+}
+
+.markdown-body span.align-center {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-center>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: center;
+}
+
+.markdown-body span.align-center span img {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.markdown-body span.align-right {
+	display: block;
+	overflow: hidden;
+	clear: both;
+}
+
+.markdown-body span.align-right>span {
+	display: block;
+	margin: 13px 0 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body span.align-right span img {
+	margin: 0;
+	text-align: right;
+}
+
+.markdown-body span.float-left {
+	display: block;
+	float: left;
+	margin-right: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+	margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+	display: block;
+	float: right;
+	margin-left: 13px;
+	overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+	display: block;
+	margin: 13px auto 0;
+	overflow: hidden;
+	text-align: right;
+}
+
+.markdown-body code,.markdown-body tt {
+	padding: 0;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	margin: 0;
+	font-size: 85%;
+	background-color: rgba(0,0,0,0.04);
+	border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after,
+.markdown-body tt:before,
+.markdown-body tt:after {
+	letter-spacing: -0.2em;
+	content: "\00a0";
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+	display: none;
+}
+
+.markdown-body del code {
+	text-decoration: inherit;
+}
+
+.markdown-body pre>code {
+	padding: 0;
+	margin: 0;
+	font-size: 100%;
+	word-break: normal;
+	white-space: pre;
+	background: transparent;
+	border: 0;
+}
+
+.markdown-body .highlight {
+	margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+	padding: 16px;
+	overflow: auto;
+	font-size: 85%;
+	line-height: 1.45;
+	background-color: #f7f7f7;
+	border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+	margin-bottom: 0;
+	word-break: normal;
+}
+
+.markdown-body pre {
+	word-wrap: normal;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+	display: inline;
+	max-width: initial;
+	padding: 0;
+	margin: 0;
+	overflow: initial;
+	line-height: inherit;
+	word-wrap: normal;
+	background-color: transparent;
+	border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after,
+.markdown-body pre tt:before,
+.markdown-body pre tt:after {
+	content: normal;
+}
+
+.highlight .pl-coc,
+.highlight .pl-entl,
+.highlight .pl-entm,
+.highlight .pl-eoa,
+.highlight .pl-mai .pl-sf,
+.highlight .pl-mm,
+.highlight .pl-pdv,
+.highlight .pl-sc,
+.highlight .pl-som,
+.highlight .pl-sr,
+.highlight .pl-v,
+.highlight .pl-vpf {
+	color: #0086b3;
+}
+.highlight .pl-eoac,
+.highlight .pl-mdht,
+.highlight .pl-mi1,
+.highlight .pl-mri,
+.highlight .pl-va,
+.highlight .pl-vpu {
+	color: #008080;
+}
+.highlight .pl-c,
+.highlight .pl-pdc {
+	color: #b4b7b4;
+	font-style: italic;
+}
+.highlight .pl-k,
+.highlight .pl-ko,
+.highlight .pl-kolp,
+.highlight .pl-mc,
+.highlight .pl-mr,
+.highlight .pl-ms,
+.highlight .pl-s,
+.highlight .pl-sok,
+.highlight .pl-st {
+	color: #6e5494;
+}
+.highlight .pl-ef,
+.highlight .pl-enf,
+.highlight .pl-enm,
+.highlight .pl-entc,
+.highlight .pl-eoi,
+.highlight .pl-sf,
+.highlight .pl-smc {
+	color: #d12089;
+}
+.highlight .pl-ens,
+.highlight .pl-eoai,
+.highlight .pl-kos,
+.highlight .pl-mh .pl-pdh,
+.highlight .pl-mp,
+.highlight .pl-pde,
+.highlight .pl-stp {
+	color: #458;
+}
+.highlight .pl-enti {
+	color: #d12089;
+	font-weight: bold;
+}
+.highlight .pl-cce,
+.highlight .pl-enc,
+.highlight .pl-kou,
+.highlight .pl-mq {
+	color: #f93;
+}
+.highlight .pl-mp1 .pl-sf {
+	color: #458;
+	font-weight: bold;
+}
+.highlight .pl-cos,
+.highlight .pl-ent,
+.highlight .pl-md,
+.highlight .pl-mdhf,
+.highlight .pl-ml,
+.highlight .pl-pdc1,
+.highlight .pl-pds,
+.highlight .pl-s1,
+.highlight .pl-scp,
+.highlight .pl-sol {
+	color: #df5000;
+}
+.highlight .pl-c1,
+.highlight .pl-cn,
+.highlight .pl-pse,
+.highlight .pl-pse .pl-s2,
+.highlight .pl-vi {
+	color: #a31515;
+}
+.highlight .pl-mb,
+.highlight .pl-pdb {
+	color: #df5000;
+	font-weight: bold;
+}
+.highlight .pl-mi,
+.highlight .pl-pdi {
+	color: #6e5494;
+	font-style: italic;
+}
+.highlight .pl-ms1 {
+	background-color: #f5f5f5;
+}
+.highlight .pl-mdh,
+.highlight .pl-mdi {
+	font-weight: bold;
+}
+.highlight .pl-mdr {
+	color: #0086b3;
+	font-weight: bold;
+}
+.highlight .pl-s2 {
+	color: #333;
+}
+.highlight .pl-ii {
+	background-color: #df5000;
+	color: #fff;
+}
+.highlight .pl-ib {
+	background-color: #f93;
+}
+.highlight .pl-id {
+	background-color: #a31515;
+	color: #fff;
+}
+.highlight .pl-iu {
+	background-color: #b4b7b4;
+}
+.highlight .pl-mo {
+	color: #969896;
+}
+
+</style>
+
+
+<script type="text/javascript">
+
+function getDocumentScrollTop() 
+{
+   var res = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+   // alert(res);
+   return res;
+}
+
+function setDocumentScrollTop(ypos) 
+{
+	window.scrollTo(0, ypos);
+}
+
+</script>
+
+
+</head>
+<body class="markdown-body">
+<h1> <a id="ejemplo-de-paginaci&oacute;n-con-thymeleaf-y-spring" class="anchor" href="#ejemplo-de-paginaci%C3%B3n-con-thymeleaf-y-spring" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Ejemplo de paginaci&oacute;n con Thymeleaf y Spring</h1> 
+<h2> <a id="autor&iacute;a-del-ejemplo" class="anchor" href="#autor%C3%ADa-del-ejemplo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Autor&iacute;a del ejemplo</h2> 
+<p>Este ejemplo es una adaptaci&oacute;n del ejemplo de Branislav Lazic que se puede encontrar en <a href="https://github.com/BranislavLazic/spring-thymeleaf-pagination">https://github.com/BranislavLazic/spring-thymeleaf-pagination</a></p> 
+<h2> <a id="necesidad-de-paginar-resultados" class="anchor" href="#necesidad-de-paginar-resultados" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Necesidad de paginar resultados</h2> 
+<p>Cuando se comienza el desarrollo de sistemas que acceden a bases de datos y presentan sus resultados, suele ser muy com&uacute;n comenzar con unos pocos datos de ejemplo en cada tabla. Supongamos una aplicaci&oacute;n de venta on-line de productos tecnol&oacute;gicos y su cat&aacute;logo de productos. La ejecuci&oacute;n de una consulta como:</p> 
+<div class="highlight highlight-source-sql">
+ <pre><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> PRODUCTOS</pre>
+</div> 
+<p>Puede producir decenas, sino miles, de resultados. <em>&iquest;Deber&iacute;an mostrarse todos a la vez en la misma pantalla?</em> La <strong>respuesta es que no</strong>, ni por usabilidad, ni por eficiencia. Dependiendo del entorno donde tengamos desplegada nuestra aplicaci&oacute;n, dicha consulta podr&iacute;a tardar en procesarse varios minutos (mientras el sgbd procesa la consulta, devuelve los resultados al sistema de plantillas, este procesa y renderiza la plantilla y la devuelve al navegador).</p> 
+<p>Al paginar los resultados, el usuario podr&aacute; navegar con m&aacute;s facilidad entre ellos, y aunque tengamos que hacer varias peticiones hasta llegar al resultado deseado, dichas peticiones se procesar&aacute;n con m&aacute;s rapidez.</p> 
+<h2> <a id="paginaci&oacute;n-en-cliente-vs-paginaci&oacute;n-en-servidor" class="anchor" href="#paginaci%C3%B3n-en-cliente-vs-paginaci%C3%B3n-en-servidor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Paginaci&oacute;n en cliente <em>vs.</em> Paginaci&oacute;n en servidor.</h2> 
+<p>Algunos programadores, a la hora de paginar, optan por la soluci&oacute;n de hacerlo en cliente. Esto significa que se solicitan al servidor todos los registros, este los devuelve, y a trav&eacute;s de alg&uacute;n tipo de algoritmo o biblioteca de Javascript, se realiza el procesamiento de los mismos. Esta aproximaci&oacute;n puede ser v&aacute;lida en alg&uacute;n contexto y, si bien es cierto que nos aporta la usabilidad, seguimos teniendo el problema del rendimiento, ya que se siguen solicitando todos los registros al servidor (aunque estos no sean visualizados de una vez). Si queremos ganar tanto en usabilidad como en rendimiento,</p> 
+<h2> <a id="algo-de-teor&iacute;a-consultas-que-devuelven-p&aacute;ginas-de-resultados" class="anchor" href="#algo-de-teor%C3%ADa-consultas-que-devuelven-p%C3%A1ginas-de-resultados" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algo de teor&iacute;a: consultas que devuelven <em>p&aacute;ginas</em> de resultados</h2> 
+<p>Hasta ahora, todas las consultas que hemos realizado y que devolv&iacute;an m&aacute;s de un resultado las hemos tratado como <code>List&lt;T&gt;</code> o <code>Stream&lt;T&gt;</code>.</p> 
+<p>Sin embargo, Spring Data Jpa nos ofrece tambi&eacute;n la posibilidad de que devuelvan un <a href="https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Page.html" rel="nofollow"><code>org.springframework.data.domain.Page&lt;T&gt;</code></a>. Se trata de una <em>sublista</em> de objetos, que nos permite obtener informaci&oacute;n sobre la posici&oacute;n con respecto a la lista completa.</p> 
+<p>Algunos de los m&eacute;todos de este interfaz son:</p> 
+<ul> 
+ <li> <code>getTotalElements()</code>: devuelve el n&uacute;mero total de elementos.</li> 
+ <li> <code>getTotalPages()</code>: devuelve el n&uacute;mero total de p&aacute;ginas.</li> 
+</ul> 
+<p>Para realizar una consulta que devuelva un objeto <code>Page&lt;T&gt;</code>, debemos usar alguna de los versiones de los m&eacute;todos en el repositorio que reciben un objeto de tipo <code>org.springframework.data.domain.Pageable</code>. Este objeto encapsula la informaci&oacute;n necesaria para realizar una consulta paginada. Existen diferentes formas de construir objetos de este tipo, aunque una de las m&aacute;s habituales suele ser a trav&eacute;s de la clase <a href="https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/PageRequest.html" rel="nofollow"><code>org.springframework.data.domain.PageRequest</code></a> y su m&eacute;todo <code>of(int page, int size)</code>. Esto nos devuelve un objeto <code>Pageble</code> (en realidad, de tipo <code>PageRequest</code>) no ordenado. Tambi&eacute;n existen otras versiones de este m&eacute;todo con posibilidad de devolver los resultados de forma ordenada.</p> 
+<h2> <a id="pasemos-a-la-pr&aacute;ctica" class="anchor" href="#pasemos-a-la-pr%C3%A1ctica" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pasemos a la pr&aacute;ctica</h2> 
+<p>Para implementar un listado paginado, vamos a necesitar lo siguiente:</p> 
+<ol> 
+ <li>Tener un servicio que nos permita realizar consultas paginadas (que reciba un objeto de tipo <code>Pageable</code> y devuelva objetos de tipo <code>Page&lt;T&gt;</code>).</li> 
+ <li>Un controlador que utilice el servicio del punto anterior, y que permita recoger par&aacute;metros de la url. Dichos par&aacute;metros ser&aacute;n <em>el tama&ntilde;o de p&aacute;gina</em> y la <em>p&aacute;gina que se quiere visualizar</em>.</li> 
+ <li>Un modelo que permita encapsultar la informaci&oacute;n sobre la paginaci&oacute;n: n&uacute;mero de botones a visualizar, conjunto de tama&ntilde;os de p&aacute;gina disponibles, ...).</li> 
+ <li>Una plantilla que sea capaz de renderizar los enlaces de paginaci&oacute;n.</li> 
+</ol> 
+<h3> <a id="c&oacute;mo-manejar-la-informaci&oacute;n-de-paginaci&oacute;n" class="anchor" href="#c%C3%B3mo-manejar-la-informaci%C3%B3n-de-paginaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>C&oacute;mo manejar la informaci&oacute;n de paginaci&oacute;n</h3> 
+<p>Para encapsular la informaci&oacute;n sobre la paginaci&oacute;n, en este ejemplo se crea un modelo, llamado <code>Pager</code> (esta clase no es propia de Spring, la crea el autor del ejemplo). Con esta clase manejamos:</p> 
+<ul> 
+ <li>El n&uacute;mero total de botones de enlace a visualizar.</li> 
+ <li>El n&uacute;mero del enlace a la p&aacute;gina que se va a renderizar como el primero.</li> 
+ <li>El n&uacute;mero del enlace a la p&aacute;gina que se va a renderizar como la &uacute;ltima.</li> 
+</ul> 
+<h3> <a id="algunos-elementos-en-el-controlador" class="anchor" href="#algunos-elementos-en-el-controlador" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Algunos elementos en el controlador</h3> 
+<p>El controlador que va a manejar el listado paginado recibe dos par&aacute;metros especiales, llamados <code>pageSize</code> (el tama&ntilde;o de p&aacute;gina) y <code>page</code> (el n&uacute;mero de p&aacute;gina a mostrar). Ambos son de tipo <code>Optional&lt;Integer&gt;</code>, ya no que son par&aacute;metros obligatorios.</p> 
+<blockquote> 
+ <p>Supongamos que hacemos una consulta que tiene 1000 resultados, y el tama&ntilde;o de p&aacute;gina est&aacute; establecido en 20. &iquest;Cu&aacute;ntas p&aacute;ginas de resultados tendremos? 1000 / 20 = 50 p&aacute;ginas. Tenemos que ofrecer, a trav&eacute;s de enlaces, la posibilidad de que el usuario pueda navegar por las diferentes p&aacute;ginas. Sin embargo, no ser&iacute;a ni est&eacute;tico ni operativo <em>pintar</em> 50 enlaces diferentes. Para solucionar este problema, vamos a establecer un n&uacute;mero de enlaces (botones) a mostrar, y adicionalmente a&ntilde;adiremos un bot&oacute;n de primera y &uacute;ltima p&aacute;gina, y otro de p&aacute;gina anterior y p&aacute;gina siguiente.</p> 
+</blockquote> 
+<p>Paso a paso, el m&eacute;todo hace lo siguiente:</p> 
+<p><strong>1. Tama&ntilde;o de p&aacute;gina</strong></p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">int</span> evalPageSize <span class="pl-k">=</span> pageSize<span class="pl-k">.</span>orElse(<span class="pl-c1">INITIAL_PAGE_SIZE</span>);</pre>
+</div> 
+<p>Calcula el tama&ntilde;o de p&aacute;gina. Si se ha pasado un tama&ntilde;o de p&aacute;gia como par&aacute;metro, se toma; si no, se toma el tama&ntilde;o de p&aacute;gina inicial, establecido como una constante.</p> 
+<p><strong>2. P&aacute;gina actual a renderizar</strong></p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">int</span> evalPage <span class="pl-k">=</span> (page<span class="pl-k">.</span>orElse(<span class="pl-c1">0</span>) <span class="pl-k">&lt;</span> <span class="pl-c1">1</span>) <span class="pl-k">?</span> <span class="pl-c1">INITIAL_PAGE</span> <span class="pl-k">:</span> page<span class="pl-k">.</span>get() <span class="pl-k">-</span> <span class="pl-c1">1</span>;</pre>
+</div> 
+<p>Calcula la p&aacute;gina que se va a mostar. Si no se recibe dicho par&aacute;metro, o es menor que 0, se devuelve el valor de la p&aacute;gina inicial. En otro caso, se devuelve el valor del par&aacute;metro decrementado en 1.</p> 
+<p><strong>3. Consulta paginada</strong></p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">Page&lt;<span class="pl-smi">Person</span>&gt;</span> persons <span class="pl-k">=</span> personService<span class="pl-k">.</span>findAllPageable(<span class="pl-smi">PageRequest</span><span class="pl-k">.</span>of(evalPage, evalPageSize));</pre>
+</div> 
+<p>Conociendo el tama&ntilde;o de p&aacute;gina y la p&aacute;gina a consultar, realizamos la consulta paginada, y obtenemos el resultado en un objeto de tipo <code>Page&lt;Person&gt;</code>.</p> 
+<p><strong>4. Construcci&oacute;n de la informaci&oacute;n de paginaci&oacute;n</strong></p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-smi">Pager</span> pager <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Pager</span>(persons<span class="pl-k">.</span>getTotalPages(), persons<span class="pl-k">.</span>getNumber(), <span class="pl-c1">BUTTONS_TO_SHOW</span>);</pre>
+</div> 
+<p>Ya tenemos toda la informaci&oacute;n suficiente para construir el modelo de informaci&oacute;n para paginar.</p> 
+<p><strong>5. Paso de informaci&oacute;n a la plantilla</strong></p> 
+<div class="highlight highlight-source-java">
+ <pre>model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>persons<span class="pl-pds">&quot;</span></span>, persons);
+model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>selectedPageSize<span class="pl-pds">&quot;</span></span>, evalPageSize);
+model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>pageSizes<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">PAGE_SIZES</span>);
+model<span class="pl-k">.</span>addAttribute(<span class="pl-s"><span class="pl-pds">&quot;</span>pager<span class="pl-pds">&quot;</span></span>, pager);</pre>
+</div> 
+<h3> <a id="plantilla" class="anchor" href="#plantilla" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plantilla</h3> 
+<p>De la plantilla podemos destacar dos grandes partes:</p> 
+<p><strong>1. Visualizaci&oacute;n de resultados</strong></p> 
+<p>El bloque de c&oacute;digo que visualiza el conjunto de resultados es id&eacute;ntico al de cualquier consulta anterior, aunque no utiliz&aacute;ramos paginaci&oacute;n:</p> 
+<div class="highlight highlight-source-java">
+ <pre><span class="pl-k">&lt;</span>tr th<span class="pl-k">:</span>each<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>person : ${persons}<span class="pl-pds">&quot;</span></span><span class="pl-k">&gt;</span>
+	<span class="pl-k">&lt;</span>td th<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>${person.firstName}<span class="pl-pds">&quot;</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>td<span class="pl-k">&gt;</span>
+	<span class="pl-k">&lt;</span>td th<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>${person.lastName}<span class="pl-pds">&quot;</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>td<span class="pl-k">&gt;</span>
+	<span class="pl-k">&lt;</span>td th<span class="pl-k">:</span>text<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">&quot;</span>${person.age}<span class="pl-pds">&quot;</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>td<span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span><span class="pl-k">/</span>tr<span class="pl-k">&gt;</span></pre>
+</div> 
+<p><strong>2. Renderizado de los elementos de paginaci&oacute;n</strong></p> 
+<p>Como elementos de paginaci&oacute;n, tenemos dos conjuntos de elementos:</p> 
+<p><em>a. Un desplegable, que contiene los diferentes tama&ntilde;os de p&aacute;ginas</em></p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">select</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>form-control pagination<span class="pl-pds">&quot;</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageSizeSelect<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">option</span> <span class="pl-e">th:each</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageSize : ${pageSizes}<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${pageSize}<span class="pl-pds">&quot;</span></span>
+			<span class="pl-e">th:value</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${pageSize}<span class="pl-pds">&quot;</span></span>
+			<span class="pl-e">th:selected</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${pageSize} == ${selectedPageSize}<span class="pl-pds">&quot;</span></span>&gt;&lt;/<span class="pl-ent">option</span>&gt;
+&lt;/<span class="pl-ent">select</span>&gt;</pre>
+</div> 
+<p>Para manejar la recarga de la p&aacute;gina cuando se seleccione un valor diferente en el desplegable, podemos usar jQuery.</p> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">th:src</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/js/app.js}<span class="pl-pds">&quot;</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre>
+</div> 
+<div class="highlight highlight-source-js">
+ <pre><span class="pl-en">$</span>(<span class="pl-c1">document</span>).<span class="pl-en">ready</span>(<span class="pl-k">function</span>() {
+	<span class="pl-en">changePageAndSize</span>();
+});
+
+<span class="pl-c"><span class="pl-c">//</span> Permite recargar la p&aacute;gina cada vez que cambia el tama&ntilde;o de p&aacute;gina</span>
+<span class="pl-k">function</span> <span class="pl-en">changePageAndSize</span>() {
+	<span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#pageSizeSelect<span class="pl-pds">'</span></span>).<span class="pl-en">change</span>(<span class="pl-k">function</span>(<span class="pl-smi">evt</span>) {
+		<span class="pl-c1">window</span>.<span class="pl-c1">location</span>.<span class="pl-c1">replace</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/?pageSize=<span class="pl-pds">&quot;</span></span> <span class="pl-k">+</span> <span class="pl-c1">this</span>.<span class="pl-c1">value</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">&quot;</span>&amp;page=1<span class="pl-pds">&quot;</span></span>);
+	});
+}</pre>
+</div> 
+<p>b. El conjunto de botones para navegar entre paǵinas.</p> 
+<p>Tenemos que renderizar:</p> 
+<ul> 
+ <li>Bot&oacute;n de p&aacute;gina inicial:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">th:class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${persons.number == 0} ? disabled<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageLink<span class="pl-pds">&quot;</span></span>
+	   <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/(pageSize=${selectedPageSize}, page=1)}<span class="pl-pds">&quot;</span></span>&gt;<span class="pl-c1">&amp;<span class="pl-en">laquo</span>;</span>&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;
+</pre>
+</div> 
+<ul> 
+ <li>Bot&oacute;n de p&aacute;gina anterior:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">th:class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${persons.number == 0} ? disabled<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageLink<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/(pageSize=${selectedPageSize}, page=${persons.number})}<span class="pl-pds">&quot;</span></span>&gt;<span class="pl-c1">&amp;<span class="pl-en">larr</span>;</span>&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;
+</pre>
+</div> 
+<ul> 
+ <li>Botones de enlaces numerados a p&aacute;ginas:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">th:class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${persons.number == (page - 1)} ? 'active pointer-disabled'<span class="pl-pds">&quot;</span></span>
+	<span class="pl-e">th:each</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>page : ${#numbers.sequence(pager.startPage, pager.endPage)}<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageLink<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/(pageSize=${selectedPageSize}, page=${page})}<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:text</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${page}<span class="pl-pds">&quot;</span></span>&gt;&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;
+</pre>
+</div> 
+<ul> 
+ <li>Bot&oacute;n de p&aacute;gina siguiente:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">th:class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${persons.number + 1 == persons.totalPages} ? disabled<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageLink<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/(pageSize=${selectedPageSize}, page=${persons.number + 2})}<span class="pl-pds">&quot;</span></span>&gt;<span class="pl-c1">&amp;<span class="pl-en">rarr</span>;</span>&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;
+</pre>
+</div> 
+<ul> 
+ <li>Bot&oacute;n de &uacute;ltima p&aacute;gina:</li> 
+</ul> 
+<div class="highlight highlight-text-html-basic">
+ <pre>&lt;<span class="pl-ent">li</span> <span class="pl-e">th:class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>${persons.number + 1 == persons.totalPages} ? disabled<span class="pl-pds">&quot;</span></span>&gt;
+	&lt;<span class="pl-ent">a</span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>pageLink<span class="pl-pds">&quot;</span></span> <span class="pl-e">th:href</span>=<span class="pl-s"><span class="pl-pds">&quot;</span>@{/(pageSize=${selectedPageSize}, page=${persons.totalPages})}<span class="pl-pds">&quot;</span></span>&gt;<span class="pl-c1">&amp;<span class="pl-en">raquo</span>;</span>&lt;/<span class="pl-ent">a</span>&gt;
+&lt;/<span class="pl-ent">li</span>&gt;
+</pre>
+</div>
+</body>
+</html>
